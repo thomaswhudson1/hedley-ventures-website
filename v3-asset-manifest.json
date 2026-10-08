@@ -1,0 +1,612 @@
+[
+  {
+    "asset": "logo-v3.webp",
+    "page": 1,
+    "source_crop": [
+      63,
+      145,
+      290,
+      201
+    ]
+  },
+  {
+    "asset": "thomas-v3.webp",
+    "page": 2,
+    "source_crop": [
+      0,
+      40,
+      427,
+      529
+    ]
+  },
+  {
+    "asset": "credential-v3-0.webp",
+    "page": 2,
+    "source_crop": [
+      503,
+      461,
+      578,
+      518
+    ]
+  },
+  {
+    "asset": "credential-v3-1.webp",
+    "page": 2,
+    "source_crop": [
+      848,
+      464,
+      915,
+      520
+    ]
+  },
+  {
+    "asset": "credential-v3-2.webp",
+    "page": 2,
+    "source_crop": [
+      508,
+      550,
+      574,
+      619
+    ]
+  },
+  {
+    "asset": "credential-v3-3.webp",
+    "page": 2,
+    "source_crop": [
+      847,
+      550,
+      915,
+      619
+    ]
+  },
+  {
+    "asset": "process-v3-1.webp",
+    "page": 3,
+    "source_crop": [
+      89,
+      353,
+      184,
+      448
+    ]
+  },
+  {
+    "asset": "process-v3-2.webp",
+    "page": 3,
+    "source_crop": [
+      284,
+      353,
+      379,
+      448
+    ]
+  },
+  {
+    "asset": "process-v3-3.webp",
+    "page": 3,
+    "source_crop": [
+      479,
+      353,
+      574,
+      448
+    ]
+  },
+  {
+    "asset": "process-v3-4.webp",
+    "page": 3,
+    "source_crop": [
+      674,
+      353,
+      769,
+      448
+    ]
+  },
+  {
+    "asset": "process-v3-5.webp",
+    "page": 3,
+    "source_crop": [
+      869,
+      353,
+      964,
+      448
+    ]
+  },
+  {
+    "asset": "process-v3-6.webp",
+    "page": 3,
+    "source_crop": [
+      1064,
+      353,
+      1159,
+      448
+    ]
+  },
+  {
+    "asset": "fundraising-v3.webp",
+    "page": 4,
+    "source_crop": [
+      92,
+      267,
+      182,
+      357
+    ]
+  },
+  {
+    "asset": "cfo-v3.webp",
+    "page": 4,
+    "source_crop": [
+      679,
+      267,
+      769,
+      357
+    ]
+  },
+  {
+    "asset": "tick-v3.webp",
+    "page": 4,
+    "source_crop": [
+      209,
+      382,
+      227,
+      400
+    ]
+  },
+  {
+    "asset": "albert-franquesa.webp",
+    "page": 5,
+    "source_crop": [
+      138,
+      141,
+      238,
+      241
+    ]
+  },
+  {
+    "asset": "bertrand-foing.webp",
+    "page": 5,
+    "source_crop": [
+      429,
+      141,
+      529,
+      241
+    ]
+  },
+  {
+    "asset": "asif-amin.webp",
+    "page": 5,
+    "source_crop": [
+      719,
+      141,
+      819,
+      241
+    ]
+  },
+  {
+    "asset": "amos-teshuva.webp",
+    "page": 5,
+    "source_crop": [
+      1009,
+      141,
+      1109,
+      241
+    ]
+  },
+  {
+    "asset": "spencer-lake.webp",
+    "page": 6,
+    "source_crop": [
+      138,
+      141,
+      238,
+      241
+    ]
+  },
+  {
+    "asset": "fred-ursell.webp",
+    "page": 6,
+    "source_crop": [
+      429,
+      141,
+      529,
+      241
+    ]
+  },
+  {
+    "asset": "huw-sparkes.webp",
+    "page": 6,
+    "source_crop": [
+      719,
+      141,
+      819,
+      241
+    ]
+  },
+  {
+    "asset": "sam-taylor.webp",
+    "page": 6,
+    "source_crop": [
+      1009,
+      141,
+      1109,
+      241
+    ]
+  },
+  {
+    "asset": "quote-v3.webp",
+    "page": 5,
+    "source_crop": [
+      166,
+      254,
+      211,
+      284
+    ]
+  },
+  {
+    "asset": "quality-clouds-v3.webp",
+    "page": 5,
+    "source_crop": [
+      107,
+      480,
+      272,
+      514
+    ]
+  },
+  {
+    "asset": "secretarium-v3.webp",
+    "page": 5,
+    "source_crop": [
+      392,
+      480,
+      570,
+      514
+    ]
+  },
+  {
+    "asset": "plumm-v3.webp",
+    "page": 5,
+    "source_crop": [
+      716,
+      479,
+      823,
+      515
+    ]
+  },
+  {
+    "asset": "walkup-v3.webp",
+    "page": 5,
+    "source_crop": [
+      1042,
+      477,
+      1075,
+      515
+    ]
+  },
+  {
+    "asset": "yfm-v3.webp",
+    "page": 5,
+    "source_crop": [
+      204,
+      535,
+      302,
+      585
+    ]
+  },
+  {
+    "asset": "iq-v3.webp",
+    "page": 5,
+    "source_crop": [
+      460,
+      540,
+      585,
+      577
+    ]
+  },
+  {
+    "asset": "iw-v3.webp",
+    "page": 5,
+    "source_crop": [
+      753,
+      542,
+      881,
+      579
+    ]
+  },
+  {
+    "asset": "paymentsense-v3.webp",
+    "page": 5,
+    "source_crop": [
+      1017,
+      541,
+      1174,
+      579
+    ]
+  },
+  {
+    "asset": "13books-v3.webp",
+    "page": 6,
+    "source_crop": [
+      118,
+      533,
+      260,
+      574
+    ]
+  },
+  {
+    "asset": "pembroke-v3.webp",
+    "page": 6,
+    "source_crop": [
+      405,
+      534,
+      553,
+      568
+    ]
+  },
+  {
+    "asset": "future-planet-v3.webp",
+    "page": 6,
+    "source_crop": [
+      716,
+      527,
+      810,
+      574
+    ]
+  },
+  {
+    "asset": "bbb-v3.webp",
+    "page": 6,
+    "source_crop": [
+      1000,
+      527,
+      1117,
+      574
+    ]
+  },
+  {
+    "asset": "ukbaa-v3.webp",
+    "page": 7,
+    "source_crop": [
+      65,
+      344,
+      449,
+      595
+    ]
+  },
+  {
+    "asset": "relationship-v3-0.webp",
+    "page": 7,
+    "source_crop": [
+      615,
+      178,
+      718,
+      224
+    ]
+  },
+  {
+    "asset": "relationship-v3-1.webp",
+    "page": 7,
+    "source_crop": [
+      778,
+      183,
+      869,
+      220
+    ]
+  },
+  {
+    "asset": "relationship-v3-2.webp",
+    "page": 7,
+    "source_crop": [
+      938,
+      181,
+      1046,
+      223
+    ]
+  },
+  {
+    "asset": "relationship-v3-3.webp",
+    "page": 7,
+    "source_crop": [
+      1094,
+      187,
+      1193,
+      220
+    ]
+  },
+  {
+    "asset": "relationship-v3-4.webp",
+    "page": 7,
+    "source_crop": [
+      610,
+      262,
+      718,
+      306
+    ]
+  },
+  {
+    "asset": "relationship-v3-5.webp",
+    "page": 7,
+    "source_crop": [
+      790,
+      250,
+      860,
+      310
+    ]
+  },
+  {
+    "asset": "relationship-v3-6.webp",
+    "page": 7,
+    "source_crop": [
+      939,
+      267,
+      1046,
+      300
+    ]
+  },
+  {
+    "asset": "relationship-v3-7.webp",
+    "page": 7,
+    "source_crop": [
+      1094,
+      265,
+      1196,
+      301
+    ]
+  },
+  {
+    "asset": "relationship-v3-8.webp",
+    "page": 7,
+    "source_crop": [
+      607,
+      344,
+      722,
+      381
+    ]
+  },
+  {
+    "asset": "relationship-v3-9.webp",
+    "page": 7,
+    "source_crop": [
+      778,
+      333,
+      876,
+      387
+    ]
+  },
+  {
+    "asset": "relationship-v3-10.webp",
+    "page": 7,
+    "source_crop": [
+      925,
+      341,
+      1058,
+      380
+    ]
+  },
+  {
+    "asset": "relationship-v3-11.webp",
+    "page": 7,
+    "source_crop": [
+      1100,
+      330,
+      1189,
+      390
+    ]
+  },
+  {
+    "asset": "relationship-v3-12.webp",
+    "page": 7,
+    "source_crop": [
+      606,
+      418,
+      723,
+      457
+    ]
+  },
+  {
+    "asset": "relationship-v3-13.webp",
+    "page": 7,
+    "source_crop": [
+      782,
+      416,
+      869,
+      456
+    ]
+  },
+  {
+    "asset": "relationship-v3-14.webp",
+    "page": 7,
+    "source_crop": [
+      939,
+      423,
+      1042,
+      454
+    ]
+  },
+  {
+    "asset": "relationship-v3-15.webp",
+    "page": 7,
+    "source_crop": [
+      1100,
+      415,
+      1190,
+      456
+    ]
+  },
+  {
+    "asset": "professional-v3-0.webp",
+    "page": 7,
+    "source_crop": [
+      615,
+      573,
+      674,
+      608
+    ]
+  },
+  {
+    "asset": "professional-v3-1.webp",
+    "page": 7,
+    "source_crop": [
+      689,
+      573,
+      775,
+      608
+    ]
+  },
+  {
+    "asset": "professional-v3-2.webp",
+    "page": 7,
+    "source_crop": [
+      786,
+      573,
+      882,
+      608
+    ]
+  },
+  {
+    "asset": "professional-v3-3.webp",
+    "page": 7,
+    "source_crop": [
+      938,
+      575,
+      1035,
+      605
+    ]
+  },
+  {
+    "asset": "professional-v3-4.webp",
+    "page": 7,
+    "source_crop": [
+      1048,
+      572,
+      1187,
+      608
+    ]
+  },
+  {
+    "asset": "contact-v3-0.webp",
+    "page": 8,
+    "source_crop": [
+      858,
+      397,
+      887,
+      421
+    ]
+  },
+  {
+    "asset": "contact-v3-1.webp",
+    "page": 8,
+    "source_crop": [
+      858,
+      432,
+      887,
+      458
+    ]
+  },
+  {
+    "asset": "contact-v3-2.webp",
+    "page": 8,
+    "source_crop": [
+      858,
+      465,
+      887,
+      491
+    ]
+  }
+]
