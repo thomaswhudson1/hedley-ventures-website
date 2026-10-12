@@ -78,10 +78,10 @@ window.HEDLEY_TESTIMONIALS = [
   },
   {
     // DRAFT: wording drafted by Thomas on 12 Oct 2026 and sent to Christiana for amendment. Replace with her
-    // approved wording, add her job title, then set approved: true.
-    name: 'Christiana Stewart-Lockhart', title: '', organisation: 'EIS Association (EISA)', category: 'ecosystem',
+    // approved wording, then set approved: true.
+    name: 'Christiana Stewart-Lockhart', title: 'Director General', organisation: 'EISA', category: 'ecosystem',
     quote: 'I’ve worked with Thomas for many years through his involvement with EISA, where he has been a longstanding supporter of the UK’s early-stage investment ecosystem. From championing our work to hosting our Spring Technical Seminar whilst at PwC, Thomas has consistently demonstrated a genuine commitment to supporting entrepreneurs and investors. He brings a rare combination of technical expertise, strong relationships and a collaborative approach.',
-    headshot: null, logo: null,
+    headshot: '/assets/network/christiana-stewart-lockhart.jpg', logo: null,
     order: 2, homepage: true, approved: false
   }
 ];

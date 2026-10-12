@@ -193,3 +193,21 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 @media(max-width:1000px){.network-home__main{grid-template-columns:1fr}.network-home__photo img{min-height:0;height:auto;aspect-ratio:3/2}.network-home__investors{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.network-home{padding:56px 0 60px}.network-home__investors{grid-template-columns:1fr;gap:12px}.quote-card{padding:22px 20px 18px}.quote-card__foot{flex-wrap:wrap}.ecosystem-panel{padding:30px 22px 24px}.eco-slide__text{font-size:1.15rem}.ecosystem-panel__carousel{grid-template-columns:1fr}.eco-slide__logo,.eco-slide__org{padding-left:0;border-left:0}.eco-carousel__controls{padding-bottom:0}.ecosystem-panel__logo-list{justify-content:center;gap:22px 30px}.ecosystem-panel__logo-list img{max-width:110px;height:calc(var(--h,28px)*.85)}.quote-card__draft,.eco-slide__draft{position:static;display:inline-block;margin-bottom:10px}}
 @media(prefers-reduced-motion:reduce){.eco-slide.is-entering{animation:none}}
+/* Testimonials: one consistent text style site-wide ------------------------- */
+/* Rethink Sans (the brochure's body face) at regular weight, upright; serif gold quote marks stay as the accent. */
+.proof-slide blockquote,.quote-card__text,.eco-slide__text,.proof-card blockquote{font-family:Rethink,Arial,sans-serif;font-weight:400;font-style:normal;letter-spacing:0}
+.proof-slide blockquote{font-size:clamp(1.12rem,1.45vw,1.32rem);line-height:1.65;color:var(--navy)}
+.proof-slide blockquote::before{font-family:DMSerif,Georgia,serif;top:-.2em}
+.quote-card__text{font-size:clamp(1rem,1.1vw,1.08rem);line-height:1.68;color:#1e3640}
+.eco-slide__text{font-size:clamp(1.12rem,1.45vw,1.32rem);line-height:1.65;color:#f1eee9;max-width:68ch}
+.proof-card blockquote{font-size:16.5px;line-height:1.62;color:#1e3640}
+/* Headshots: larger and in proportion with the text */
+.proof-slide__photo{width:144px;height:144px}
+.proof-slide{grid-template-columns:250px 1fr}
+.quote-card__photo{width:72px;height:72px}
+.quote-card__person{gap:16px}
+.eco-slide__photo{width:92px;height:92px}
+.eco-slide__person{gap:18px}
+.proof-portrait{width:112px;height:112px;top:-56px}
+.proof-grid{padding-top:58px}
+@media(max-width:760px){.proof-slide{grid-template-columns:1fr}.proof-slide__photo{width:116px;height:116px}.quote-card__photo{width:64px;height:64px}.eco-slide__photo{width:80px;height:80px}.eco-slide__text{font-size:1.06rem}.proof-slide blockquote{font-size:1.06rem}}
