@@ -47,6 +47,24 @@ window.HEDLEY_TESTIMONIALS = [
     order: 4, homepage: true, approved: true
   },
   {
+    // General founder testimonial (not linked to a specific transaction)
+    id: 'sabrina-del-prete', featured: true, transaction: null,
+    name: 'Sabrina Del Prete', title: 'Founder & CEO', organisation: 'Kore Labs', category: 'founder',
+    quote: 'Tom was always a trusted adviser to Kore Labs and provided sound advice throughout our fundraising journey. He genuinely put our interests first and we always felt we could rely on his judgement when making important decisions.',
+    headshot: '/assets/network/sabrina-del-prete.jpg',
+    logo: { src: '/assets/network/kore-labs.svg', width: 400, height: 128, displayHeight: 30 },
+    order: 5, homepage: false, approved: true
+  },
+  {
+    // DRAFT: Brad agreed (5 Sep 2026) to a testimonial drafted by Thomas. Add the agreed wording, then set approved: true.
+    id: 'brad-nobbs', featured: true, transaction: null,
+    name: 'Brad Nobbs', title: 'Co-Founder & CEO', organisation: 'Booked it', category: 'founder',
+    quote: 'Testimonial wording to be supplied.',
+    headshot: '/assets/network/brad-nobbs.jpg',
+    logo: { src: '/assets/network/booked-it.png', width: 483, height: 111, displayHeight: 28 },
+    order: 6, homepage: false, approved: false
+  },
+  {
     id: 'spencer-lake', featured: true, name: 'Spencer Lake', title: 'Partner', organisation: '13Books Capital', category: 'investor',
     quote: 'Tom is clearly passionate about venture capital and has been active in the ecosystem for many years, including having hosted me on his podcast some time ago and attending various FinTech scouting events. He understands our mandate well and consistently brings us credible, relevant opportunities.',
     headshot: '/assets/spencer-lake.webp',
@@ -85,7 +103,8 @@ window.HEDLEY_TESTIMONIALS = [
     // Confirmed by Thomas for publication on 12 Oct 2026.
     id: 'christiana-stewart-lockhart', featured: true, name: 'Christiana Stewart-Lockhart', title: 'Director General', organisation: 'EISA', category: 'ecosystem',
     quote: 'I’ve worked with Thomas for many years through his involvement with EISA, where he has been a longstanding supporter of the UK’s early-stage investment ecosystem. From championing our work to hosting our Spring Technical Seminar whilst at PwC, Thomas has consistently demonstrated a genuine commitment to supporting entrepreneurs and investors. He brings a rare combination of technical expertise, strong relationships and a collaborative approach.',
-    headshot: '/assets/network/christiana-stewart-lockhart.jpg', logo: null,
+    headshot: '/assets/network/christiana-stewart-lockhart.jpg',
+    logo: { src: '/assets/network/eisa.png', width: 520, height: 302, displayHeight: 56, mono: true },
     order: 2, homepage: true, approved: true
   },
   {
@@ -97,7 +116,7 @@ window.HEDLEY_TESTIMONIALS = [
   },
   {
     id: 'jack-taylor', featured: false, name: 'Jack Taylor', title: 'Director', organisation: 'Lower Road Ventures', category: 'investor',
-    quote: 'Tom has a real ability to see an opportunity through an investors eyes. He knows what questions investors may ask and how to make sure the strongest parts of the investment case come through clearly.',
+    quote: 'Tom has a real ability to see an opportunity through an investor’s eyes. He knows what questions investors may ask and how to make sure the strongest parts of the investment case come through clearly.',
     headshot: '/assets/network/jack-taylor.jpg', logo: null,
     order: 6, homepage: false, approved: true
   },
