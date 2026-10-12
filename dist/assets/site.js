@@ -306,142 +306,124 @@ document.querySelectorAll('[data-expand]').forEach((button) => {
   });
 });
 
-// Services: interactive fundraising journey, built from /assets/data/journey.js.
-// Without JS (or data) the plain <ol class="journey"> inside [data-journey] is shown instead.
+// Services: fundraising journey as a route map, built from /assets/data/journey.js.
+// Each stop opens to show its description along the route. Without JS the plain <ol class="journey"> is shown.
 const journeyRoot = document.querySelector('[data-journey]');
 const journeyStages = Array.isArray(window.HEDLEY_JOURNEY) ? window.HEDLEY_JOURNEY : [];
 if (journeyRoot && journeyStages.length) {
   const svgNS = 'http://www.w3.org/2000/svg';
-  const offsets = [0, 0, 38, 0, 0, 12]; // vertical drop of each node, in px, for the gently curving line
-  const count = journeyStages.length;
+  const drops = [0, 44, 6, 50, 0, 38]; // vertical drop of each stop on wide screens, so the route winds
   let current = 0;
 
-  const track = el('div', 'journey-track');
-  track.style.setProperty('--count', count);
-  const tabs = el('div', 'journey-track__nodes');
-  tabs.setAttribute('role', 'tablist');
-  tabs.setAttribute('aria-label', 'Fundraising journey stages');
+  const route = el('div', 'route');
+  const svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('class', 'route__line');
+  svg.setAttribute('aria-hidden', 'true');
+  const trail = document.createElementNS(svgNS, 'path');
+  trail.setAttribute('class', 'route__trail');
+  const travelled = document.createElementNS(svgNS, 'path');
+  travelled.setAttribute('class', 'route__travelled');
+  const start = document.createElementNS(svgNS, 'circle');
+  start.setAttribute('class', 'route__start');
+  start.setAttribute('r', '5');
+  const flag = document.createElementNS(svgNS, 'path');
+  flag.setAttribute('class', 'route__flag');
+  svg.append(trail, travelled, start, flag);
 
-  // Curve: a smooth path through each node centre (x as a share of 1200, y in px)
-  const line = document.createElementNS(svgNS, 'svg');
-  line.setAttribute('class', 'journey-track__line');
-  line.setAttribute('viewBox', '0 0 1200 160');
-  line.setAttribute('preserveAspectRatio', 'none');
-  line.setAttribute('aria-hidden', 'true');
-  const points = journeyStages.map((s, i) => [((i + 0.5) / count) * 1200, 66 + (offsets[i] || 0)]);
-  let d = `M${points[0][0]} ${points[0][1]}`;
-  for (let i = 1; i < points.length; i++) {
-    const [x0, y0] = points[i - 1]; const [x1, y1] = points[i]; const mid = (x1 - x0) / 2;
-    d += ` C${x0 + mid} ${y0} ${x1 - mid} ${y1} ${x1} ${y1}`;
-  }
-  const path = document.createElementNS(svgNS, 'path');
-  path.setAttribute('d', d);
-  path.setAttribute('vector-effect', 'non-scaling-stroke');
-  line.appendChild(path);
-  track.appendChild(line);
-
-  const buttons = journeyStages.map((stage, i) => {
-    const btn = el('button', 'journey-node');
+  const list = el('ol', 'route__stops');
+  const stops = journeyStages.map((stage, i) => {
+    const item = el('li', 'route-stop');
+    item.style.setProperty('--drop', `${drops[i] || 0}px`);
+    const btn = el('button', 'route-stop__toggle');
     btn.type = 'button';
-    btn.id = `journey-tab-${i + 1}`;
-    btn.setAttribute('role', 'tab');
-    btn.setAttribute('aria-controls', 'journey-panel');
-    btn.style.setProperty('--drop', `${offsets[i] || 0}px`);
-    btn.appendChild(el('span', 'journey-node__number', stage.number));
-    const circle = el('span', 'journey-node__circle');
-    const icon = el('img', 'journey-node__icon');
+    btn.setAttribute('aria-controls', `route-stop-${i + 1}`);
+    btn.appendChild(el('span', 'route-stop__number', stage.number));
+    const circle = el('span', 'route-stop__circle');
+    const icon = el('img', 'route-stop__icon');
     icon.src = stage.icon; icon.alt = ''; icon.width = 48; icon.height = 48;
     circle.appendChild(icon);
     btn.appendChild(circle);
     // Keep hyphenated words (e.g. investor-ready) on one line
-    const nodeTitle = el('span', 'journey-node__title');
+    const title = el('span', 'route-stop__title');
     stage.title.split(' ').forEach((word, w) => {
-      if (w) nodeTitle.appendChild(document.createTextNode(' '));
-      if (word.includes('-')) { const keep = el('span', '', word); keep.style.whiteSpace = 'nowrap'; nodeTitle.appendChild(keep); }
-      else nodeTitle.appendChild(document.createTextNode(word));
+      if (w) title.appendChild(document.createTextNode(' '));
+      if (word.includes('-')) { const keep = el('span', '', word); keep.style.whiteSpace = 'nowrap'; title.appendChild(keep); }
+      else title.appendChild(document.createTextNode(word));
     });
-    btn.appendChild(nodeTitle);
-    btn.addEventListener('click', () => {
-      select(i, false);
-      // On phones the panel sits below the list, so bring it into view
-      if (window.matchMedia('(max-width: 760px)').matches) panel.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' });
-    });
-    tabs.appendChild(btn);
-    return btn;
+    btn.appendChild(title);
+    const detail = el('div', 'route-stop__detail');
+    detail.id = `route-stop-${i + 1}`;
+    const inner = el('div', 'route-stop__inner');
+    inner.appendChild(el('p', '', stage.summary));
+    detail.appendChild(inner);
+    btn.addEventListener('click', () => open(i));
+    item.append(btn, detail);
+    list.appendChild(item);
+    return { item, btn, circle, detail };
   });
-  track.appendChild(tabs);
-
-  // Detail panel
-  const panel = el('div', 'journey-panel');
-  panel.id = 'journey-panel';
-  panel.setAttribute('role', 'tabpanel');
-  panel.tabIndex = 0;
-  const head = el('div', 'journey-panel__head');
-  const num = el('p', 'journey-panel__number');
-  const rule = el('div', 'gold-rule');
-  const title = el('h3', 'journey-panel__title');
-  head.append(num, rule, title);
-  const copy = el('div', 'journey-panel__copy');
-  const summary = el('p', 'journey-panel__summary');
-  const detail = el('p', 'journey-panel__detail');
-  copy.append(summary, detail);
-  const side = el('div', 'journey-panel__side');
-  const outputsWrap = el('div', 'journey-panel__outputs');
-  outputsWrap.appendChild(el('p', 'journey-panel__label', 'Typical outputs'));
-  const outputs = el('ul', 'journey-panel__list');
-  outputsWrap.appendChild(outputs);
-  const nav = el('div', 'journey-panel__nav');
-  const prev = el('button', 'journey-arrow journey-arrow--prev');
-  const next = el('button', 'journey-arrow journey-arrow--next');
-  prev.type = next.type = 'button';
-  prev.innerHTML = '<span aria-hidden="true">←</span>';
-  next.innerHTML = '<span aria-hidden="true">→</span>';
-  prev.addEventListener('click', () => select(current - 1, false));
-  next.addEventListener('click', () => select(current + 1, false));
-  nav.append(prev, next);
-  side.append(outputsWrap, nav);
-  panel.append(head, copy, side);
+  route.append(svg, list);
 
   const caption = el('p', 'journey-caption');
   caption.innerHTML = '<svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18"><circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor"/><path d="M10 9v5M10 6.2v.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
   caption.appendChild(document.createTextNode('Select any stage to explore how Hedley Ventures supports you throughout the fundraising process.'));
 
-  const select = (index, focusTab) => {
-    current = Math.max(0, Math.min(count - 1, index));
-    const stage = journeyStages[current];
-    buttons.forEach((btn, i) => {
-      const active = i === current;
-      btn.setAttribute('aria-selected', String(active));
-      btn.tabIndex = active ? 0 : -1;
-      btn.classList.toggle('is-active', active);
-      btn.classList.toggle('is-done', i < current);
+  // Draw the route through the centre of each stop, measured from the live layout
+  const draw = () => {
+    const box = route.getBoundingClientRect();
+    if (!box.width) return;
+    const pts = stops.map(({ circle }) => {
+      const r = circle.getBoundingClientRect();
+      return [r.left - box.left + r.width / 2, r.top - box.top + r.height / 2];
     });
-    if (focusTab) buttons[current].focus();
-    panel.setAttribute('aria-labelledby', buttons[current].id);
-    panel.style.setProperty('--notch', `${((current + 0.5) / count) * 100}%`);
-    num.textContent = stage.number;
-    title.textContent = stage.title;
-    summary.textContent = stage.summary;
-    detail.textContent = stage.detail || '';
-    outputs.replaceChildren(...(stage.outputs || []).map((o) => el('li', '', o)));
-    prev.disabled = current === 0;
-    next.disabled = current === count - 1;
-    prev.setAttribute('aria-label', current === 0 ? 'Previous stage' : `Previous stage: ${journeyStages[current - 1].title}`);
-    next.setAttribute('aria-label', current === count - 1 ? 'Next stage' : `Next stage: ${journeyStages[current + 1].title}`);
-    if (!reduceMotion) { panel.classList.remove('is-changing'); void panel.offsetWidth; panel.classList.add('is-changing'); }
+    const across = Math.abs(pts[pts.length - 1][0] - pts[0][0]) > Math.abs(pts[pts.length - 1][1] - pts[0][1]);
+    const curve = (a, b) => (across
+      ? ` C${a[0] + (b[0] - a[0]) / 2} ${a[1]} ${b[0] - (b[0] - a[0]) / 2} ${b[1]} ${b[0]} ${b[1]}`
+      : ` C${a[0]} ${a[1] + (b[1] - a[1]) / 2} ${b[0]} ${b[1] - (b[1] - a[1]) / 2} ${b[0]} ${b[1]}`);
+    const first = across ? [0, pts[0][1]] : pts[0];
+    const last = across ? [box.width - 6, pts[pts.length - 1][1]] : pts[pts.length - 1];
+    const path = (upto) => {
+      let d = `M${first[0]} ${first[1]}`;
+      let prev = first;
+      pts.slice(0, upto + 1).forEach((p) => { if (p !== first) d += curve(prev, p); prev = p; });
+      return { d, prev };
+    };
+    const full = path(pts.length - 1);
+    trail.setAttribute('d', full.d + (across ? curve(full.prev, last) : ''));
+    travelled.setAttribute('d', path(current).d);
+    svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+    svg.setAttribute('width', box.width);
+    svg.setAttribute('height', box.height);
+    start.style.display = flag.style.display = across ? '' : 'none';
+    start.setAttribute('cx', first[0] + 5);
+    start.setAttribute('cy', first[1]);
+    flag.setAttribute('d', `M${last[0]} ${last[1] + 6}V${last[1] - 20}l-14 5 14 5`);
   };
 
-  // Keyboard: arrows move between stages, Home/End jump to the ends
-  tabs.addEventListener('keydown', (event) => {
-    const keys = { ArrowRight: current + 1, ArrowDown: current + 1, ArrowLeft: current - 1, ArrowUp: current - 1, Home: 0, End: count - 1 };
-    if (!(event.key in keys)) return;
+  const open = (index, focus) => {
+    current = Math.max(0, Math.min(stops.length - 1, index));
+    stops.forEach(({ item, btn }, i) => {
+      btn.setAttribute('aria-expanded', String(i === current));
+      item.classList.toggle('is-open', i === current);
+      item.classList.toggle('is-passed', i < current);
+    });
+    if (focus) stops[current].btn.focus();
+    draw();
+  };
+
+  // Arrow keys move along the route, Home/End jump to either end
+  list.addEventListener('keydown', (event) => {
+    const keys = { ArrowRight: current + 1, ArrowDown: current + 1, ArrowLeft: current - 1, ArrowUp: current - 1, Home: 0, End: stops.length - 1 };
+    if (!(event.key in keys) || !event.target.closest('.route-stop__toggle')) return;
     event.preventDefault();
-    select(keys[event.key], true);
+    open(keys[event.key], true);
   });
 
-  journeyRoot.replaceChildren(track, panel, caption);
+  journeyRoot.replaceChildren(route, caption);
   journeyRoot.classList.add('is-interactive');
-  select(0, false);
+  open(0);
+  if ('ResizeObserver' in window) new ResizeObserver(draw).observe(route);
+  else window.addEventListener('resize', draw);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
 }
 
 // Scroll reveal: content is visible by default; JS only adds the hidden start state when it can animate
