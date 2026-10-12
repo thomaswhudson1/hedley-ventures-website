@@ -85,6 +85,81 @@ if (carousel) {
     if (event.key === 'ArrowRight') show(current + 1);
   });
 }
+// Transactions: cards are built from /assets/data/transactions.js.
+// <div data-transactions="featured"> shows featured deals (up to data-limit); data-transactions="all" shows every deal.
+const makeLogo = (logo, alt, className) => {
+  const img = document.createElement('img');
+  img.className = className;
+  img.src = logo.src;
+  img.alt = alt;
+  img.width = logo.width;
+  img.height = logo.height;
+  img.loading = 'lazy';
+  img.style.setProperty('--logo-h', `${logo.displayHeight}px`);
+  return img;
+};
+
+const renderTransactionCard = (deal, index) => {
+  const card = document.createElement('article');
+  card.className = 'deal-card reveal';
+  card.style.setProperty('--reveal-delay', `${100 + index * 90}ms`);
+
+  const logoWrap = document.createElement('div');
+  logoWrap.className = 'deal-card__logo';
+  logoWrap.appendChild(makeLogo(deal.companyLogo, deal.company, 'deal-card__company-logo'));
+  card.appendChild(logoWrap);
+
+  const amount = document.createElement('p');
+  amount.className = 'deal-card__amount';
+  amount.textContent = deal.amount;
+  card.appendChild(amount);
+
+  const type = document.createElement('p');
+  type.className = 'deal-card__type';
+  type.textContent = deal.description || deal.type;
+  card.appendChild(type);
+
+  const meta = [deal.sector, deal.year].filter(Boolean).join(' · ');
+  if (meta) {
+    const metaEl = document.createElement('p');
+    metaEl.className = 'deal-card__meta';
+    metaEl.textContent = meta;
+    card.appendChild(metaEl);
+  }
+
+  const foot = document.createElement('div');
+  foot.className = 'deal-card__foot';
+  const label = document.createElement('span');
+  label.className = 'deal-card__label';
+  label.textContent = deal.counterpartyLabel;
+  foot.appendChild(label);
+  const cpWrap = document.createElement('div');
+  cpWrap.className = 'deal-card__counterparty';
+  cpWrap.appendChild(makeLogo(deal.counterpartyLogo, deal.counterparty, 'deal-card__counterparty-logo'));
+  foot.appendChild(cpWrap);
+  card.appendChild(foot);
+
+  if (deal.link) {
+    const link = document.createElement('a');
+    link.className = 'deal-card__link';
+    link.href = deal.link;
+    link.innerHTML = `<span class="sr-only">${deal.company}: ${deal.amount} ${deal.type}</span>`;
+    card.appendChild(link);
+    card.classList.add('deal-card--linked');
+  }
+  return card;
+};
+
+document.querySelectorAll('[data-transactions]').forEach((container) => {
+  const deals = Array.isArray(window.HEDLEY_TRANSACTIONS) ? window.HEDLEY_TRANSACTIONS : [];
+  const mode = container.getAttribute('data-transactions');
+  const limit = Number(container.getAttribute('data-limit')) || Infinity;
+  const list = (mode === 'featured' ? deals.filter((d) => d.featured) : deals).slice(0, limit);
+  if (!list.length) return;
+  container.replaceChildren(...list.map(renderTransactionCard));
+  container.classList.add('is-rendered');
+});
+
 // Scroll reveal: content is visible by default; JS only adds the hidden start state when it can animate
 const revealItems = document.querySelectorAll('.reveal');
 if (revealItems.length && 'IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
