@@ -85,3 +85,16 @@ if (carousel) {
     if (event.key === 'ArrowRight') show(current + 1);
   });
 }
+// Scroll reveal: content is visible by default; JS only adds the hidden start state when it can animate
+const revealItems = document.querySelectorAll('.reveal');
+if (revealItems.length && 'IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.classList.add('reveal-ready');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  revealItems.forEach((el) => revealObserver.observe(el));
+}
