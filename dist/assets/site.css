@@ -211,3 +211,5 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .proof-portrait{width:112px;height:112px;top:-56px}
 .proof-grid{padding-top:58px}
 @media(max-width:760px){.proof-slide{grid-template-columns:1fr}.proof-slide__photo{width:116px;height:116px}.quote-card__photo{width:64px;height:64px}.eco-slide__photo{width:80px;height:80px}.eco-slide__text{font-size:1.06rem}.proof-slide blockquote{font-size:1.06rem}}
+/* Home: tighter gap now that the process timeline no longer sits between these sections */
+@media(min-width:761px){.support+.deals-home{padding-top:30px}}
