@@ -362,4 +362,62 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .route-stop__number{grid-column:2;grid-row:1;align-self:end;margin:0;font-size:13px}
 .route-stop__title{grid-column:2;grid-row:2;align-self:start;max-width:none;margin-top:2px;font-size:1.15rem}
 .route-stop__detail{padding-left:72px}.route-stop__inner p{max-width:62ch;margin:8px 0 0;padding:10px 0 0;font-size:15.5px}
-.journey-caption{align-items:flex-start;margin-top:18px}.journey-caption svg{margin-top:3px}}@media(min-width:761px) and (max-width:1000px){.journey-explorer.is-interactive{margin-top:44px}.route-stop{padding-bottom:26px}}
+.journey-caption{align-items:flex-start;margin-top:18px}.journey-caption svg{margin-top:3px}}@media(min-width:761px) and (max-width:1000px){.journey-explorer.is-interactive{margin-top:44px}.route-stop{padding-bottom:26px}}/* Deals page: transaction tombstones */
+.deals-intro{padding:58px 0 46px}
+.deals-portfolio{padding:52px 0 108px}
+.deals-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px 28px;margin-bottom:30px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.deals-head__title{min-height:0;margin:0;font-family:Rethink,Arial,sans-serif;font-weight:600;font-size:13px;line-height:1.6;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-dark)}
+.deals-head__attribution{display:flex;align-items:center;gap:12px;font-size:14.5px;line-height:1.5;color:var(--muted)}
+.deals-head__attribution::before{content:"";flex-shrink:0;width:24px;height:1px;background:var(--gold)}
+.tombstones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row dense;gap:24px}
+.tombstone{display:flex;flex-direction:column;background:#f8f6f2;border:1px solid #ddd5c8;border-radius:4px;overflow:hidden;transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease}
+.tombstone--centred{grid-column:1/-1;justify-self:center;width:calc((100% - 24px) / 2)}
+.tombstone.is-open{border-color:var(--gold)}
+@media(hover:hover){.tombstone:hover{border-color:#c9b48a;box-shadow:0 14px 30px -24px rgba(0,30,42,.45);transform:translateY(-2px)}}
+.tombstone__body{display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;padding:54px 40px 40px;text-align:center}
+.tombstone__logo{display:flex;align-items:center;justify-content:center;height:72px}
+.tombstone__company-logo{width:auto;height:calc(var(--logo-h,28px) * 1.35);max-width:min(280px,100%);object-fit:contain}
+.tombstone__rule{width:40px;height:1px;margin:30px 0 26px;background:var(--gold)}
+.tombstone__amount{font-family:DMSerif,Georgia,serif;font-size:clamp(2.6rem,3.6vw,3.4rem);line-height:1;letter-spacing:-.02em;color:var(--navy)}
+.tombstone__amount--text{font-size:clamp(1.9rem,2.5vw,2.35rem);line-height:1.1}
+.tombstone__type{margin-top:14px;font-size:12.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-dark)}
+.tombstone__desc{max-width:42ch;margin-top:16px;font-size:15.5px;line-height:1.6;color:var(--muted)}
+.tombstone__meta{margin-top:10px;font-size:13.5px;letter-spacing:.04em;color:var(--muted)}
+.tombstone__actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 28px;padding:0 32px 28px}
+.tombstone__toggle,.tombstone__announcement{display:inline-flex;align-items:center;gap:9px;min-height:36px;padding:4px 0;background:none;border:0;border-bottom:1px solid var(--gold);font:inherit;font-weight:600;font-size:15px;color:var(--navy);cursor:pointer;transition:color .2s ease,border-color .2s ease}
+.tombstone__announcement{font-weight:500;color:var(--muted);border-bottom-color:#cdbfa8}
+.tombstone__announcement::after{content:"↗";font-size:13px;color:var(--gold-dark)}
+.tombstone__toggle-icon{display:inline-block;color:var(--gold-dark);transition:transform .25s ease}
+.tombstone__toggle[aria-expanded="true"] .tombstone__toggle-icon{transform:rotate(90deg)}
+.tombstone__toggle:hover,.tombstone__announcement:hover{color:var(--gold-dark);border-bottom-color:var(--gold-dark)}
+.tombstone__toggle:hover .tombstone__toggle-icon{transform:translateX(3px)}
+.tombstone__toggle[aria-expanded="true"]:hover .tombstone__toggle-icon{transform:rotate(90deg)}
+.tombstone__toggle:focus-visible,.tombstone__announcement:focus-visible,.tombstone-panel__close:focus-visible{outline:2px solid var(--gold-dark);outline-offset:4px}
+.tombstone__band{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:96px;padding:20px 32px;background:var(--navy);color:var(--cream)}
+.tombstone__party{display:flex;flex-direction:column;gap:4px;min-width:0;text-align:left}
+.tombstone__label{font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#c2aa77}
+.tombstone__names{font-size:15px;line-height:1.4;color:#f4f1ec}
+.tombstone__party-logos{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:12px 20px;min-width:0}
+.tombstone__party-logo{width:auto;height:calc(var(--logo-h,26px) * .95);max-width:170px;object-fit:contain;filter:brightness(0) invert(1);opacity:.92}
+/* Founder's perspective panel, opened beneath its tombstone */
+.tombstone-panel{position:relative;grid-column:1/-1;padding:44px 64px 40px 56px;background:#f8f6f2;border:1px solid var(--gold);border-radius:4px}
+.tombstone-panel::before{content:"";position:absolute;top:-8px;left:var(--notch,25%);width:14px;height:14px;background:#f8f6f2;border-top:1px solid var(--gold);border-left:1px solid var(--gold);transform:translateX(-50%) rotate(45deg)}
+.tombstone-panel.is-opening{animation:dealPanelIn .4s ease}
+@keyframes dealPanelIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.tombstone-panel__inner{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:52px;margin:0}
+.tombstone-panel__mark{display:block;height:34px;font-family:DMSerif,Georgia,serif;font-size:66px;line-height:1;color:var(--gold)}
+.tombstone-panel__text{margin:12px 0 0;font-family:DMSerif,Georgia,serif;font-size:clamp(1.15rem,1.45vw,1.35rem);line-height:1.62;color:var(--navy)}
+.tombstone-panel__foot{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:20px;padding-left:40px;border-left:1px solid #ddd5c8}
+.tombstone-panel__person{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.tombstone-panel__photo{width:88px;height:88px;border-radius:50%;object-fit:cover}
+.tombstone-panel__photo--placeholder{display:grid;place-items:center;background:var(--paper);color:var(--gold-dark);font-weight:600}
+.tombstone-panel__name{display:block;font-weight:600;font-size:16px;color:var(--navy)}
+.tombstone-panel__role{display:block;margin-top:2px;font-size:14px;line-height:1.4;color:var(--muted)}
+.tombstone-panel__logo{display:block;width:auto;height:var(--logo-h,26px);max-width:160px;object-fit:contain}
+.tombstone-panel__close{position:absolute;top:14px;right:16px;display:grid;place-items:center;width:38px;height:38px;padding:0;background:transparent;border:1px solid #ddd5c8;border-radius:50%;font:inherit;font-size:20px;line-height:1;color:var(--navy);cursor:pointer;transition:border-color .2s ease,background-color .2s ease}
+.tombstone-panel__close:hover{border-color:var(--gold-dark);background:#fff}
+.tombstones-fallback{margin:0;padding-left:20px;color:var(--ink)}
+@media(prefers-reduced-motion:reduce){.tombstone,.tombstone__toggle-icon{transition:none}.tombstone:hover{transform:none}.tombstone-panel.is-opening{animation:none}}
+@media(max-width:1000px){.tombstone__body{padding:44px 28px 34px}.tombstone__band{padding:18px 24px}.tombstone__party-logo{max-width:130px}.tombstone-panel{padding:40px 40px 34px}.tombstone-panel__inner{grid-template-columns:1fr;gap:26px}.tombstone-panel__foot{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:22px 0 0;border-left:0;border-top:1px solid #ddd5c8}.tombstone-panel__person{flex-direction:row;align-items:center}.tombstone-panel__photo{width:64px;height:64px}}
+@media(max-width:700px){.deals-intro{padding:40px 0 30px}.deals-portfolio{padding:34px 0 72px}.tombstones{grid-template-columns:1fr;gap:18px}.tombstone--centred{width:100%}.tombstone__body{padding:40px 22px 30px}.tombstone__logo{height:60px}.tombstone__company-logo{height:calc(var(--logo-h,28px) * 1.15)}.tombstone__rule{margin:24px 0 20px}.tombstone__actions{padding:0 22px 24px}.tombstone__band{min-height:84px;padding:16px 20px}.tombstone__party-logo{height:calc(var(--logo-h,26px) * .8);max-width:120px}.tombstone-panel{padding:34px 22px 26px}.tombstone-panel::before{left:50%}.tombstone-panel__text{font-size:1.1rem}}
+.tombstone__company{margin-top:12px;font-family:DMSerif,Georgia,serif;font-size:1.35rem;line-height:1.2;color:var(--navy)}.tombstone__logo+.tombstone__company+.tombstone__rule{margin-top:22px}

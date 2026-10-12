@@ -109,10 +109,13 @@ const renderTransactionCard = (deal, index) => {
   logoWrap.appendChild(makeLogo(deal.companyLogo, deal.company, 'deal-card__company-logo'));
   card.appendChild(logoWrap);
 
-  const amount = document.createElement('p');
-  amount.className = 'deal-card__amount';
-  amount.textContent = deal.amount;
-  card.appendChild(amount);
+  const amountText = dealHeadline(deal);
+  if (amountText) {
+    const amount = document.createElement('p');
+    amount.className = 'deal-card__amount';
+    amount.textContent = amountText;
+    card.appendChild(amount);
+  }
 
   const type = document.createElement('p');
   type.className = 'deal-card__type';
@@ -131,27 +134,28 @@ const renderTransactionCard = (deal, index) => {
   foot.className = 'deal-card__foot';
   const label = document.createElement('span');
   label.className = 'deal-card__label';
-  label.textContent = deal.counterpartyLabel;
+  label.textContent = dealLabel(deal);
   foot.appendChild(label);
   const cpWrap = document.createElement('div');
   cpWrap.className = 'deal-card__counterparty';
-  cpWrap.appendChild(makeLogo(deal.counterpartyLogo, deal.counterparty, 'deal-card__counterparty-logo'));
+  (deal.counterparties || []).forEach((cp) => {
+    if (cp.logo) cpWrap.appendChild(makeLogo(cp.logo, cp.name, 'deal-card__counterparty-logo'));
+    else { const name = document.createElement('span'); name.className = 'deal-card__counterparty-name'; name.textContent = cp.name; cpWrap.appendChild(name); }
+  });
   foot.appendChild(cpWrap);
   card.appendChild(foot);
-
-  if (deal.link) {
-    const link = document.createElement('a');
-    link.className = 'deal-card__link';
-    link.href = deal.link;
-    link.innerHTML = `<span class="sr-only">${deal.company}: ${deal.amount} ${deal.type}</span>`;
-    card.appendChild(link);
-    card.classList.add('deal-card--linked');
-  }
   return card;
 };
 
+// Shared deal wording: the big figure is the disclosed amount ("Acquired" for an acquisition with no disclosed value),
+// and the counterparty label follows the kind of deal unless overridden.
+const sortedDeals = () => (Array.isArray(window.HEDLEY_TRANSACTIONS) ? window.HEDLEY_TRANSACTIONS : [])
+  .slice().sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+function dealHeadline(deal) { return deal.amount || (deal.kind === 'acquisition' ? 'Acquired' : ''); }
+function dealLabel(deal) { return deal.counterpartyLabel || (deal.kind === 'acquisition' ? 'Acquired by' : 'Investment from'); }
+
 document.querySelectorAll('[data-transactions]').forEach((container) => {
-  const deals = Array.isArray(window.HEDLEY_TRANSACTIONS) ? window.HEDLEY_TRANSACTIONS : [];
+  const deals = sortedDeals();
   const mode = container.getAttribute('data-transactions');
   const limit = Number(container.getAttribute('data-limit')) || Infinity;
   const list = (mode === 'featured' ? deals.filter((d) => d.featured) : deals).slice(0, limit);
@@ -287,6 +291,139 @@ document.querySelectorAll('[data-testimonial-carousel]').forEach((container) => 
     if (e.key === 'ArrowLeft') show(current - 1);
     if (e.key === 'ArrowRight') show(current + 1);
   });
+});
+
+// Deals page: transaction tombstones built from /assets/data/transactions.js (every deal, in `order`).
+// A deal with a founder testimonial gets a "Read the founder's perspective" button that opens a panel
+// directly beneath it; deals without one simply have no button. Only one panel is open at a time.
+const resolveDealTestimonial = (deal) => {
+  if (!deal.testimonial) return null;
+  if (typeof deal.testimonial === 'object') return deal.testimonial;
+  const t = (Array.isArray(window.HEDLEY_TESTIMONIALS) ? window.HEDLEY_TESTIMONIALS : []).find((x) => x.id === deal.testimonial);
+  return t && (t.approved || isLocalPreview) ? t : null;
+};
+
+document.querySelectorAll('[data-deals]').forEach((grid) => {
+  const deals = sortedDeals();
+  if (!deals.length) return;
+  const items = [];
+  const nodes = [];
+
+  deals.forEach((deal, i) => {
+    const card = el('article', 'tombstone reveal');
+    card.style.setProperty('--reveal-delay', `${Math.min(i, 5) * 80}ms`);
+    card.setAttribute('aria-label', `${deal.company}: ${[dealHeadline(deal), deal.type].filter(Boolean).join(' ')}`);
+
+    const body = el('div', 'tombstone__body');
+    const logoWrap = el('div', 'tombstone__logo');
+    logoWrap.appendChild(makeLogo(deal.companyLogo, deal.company, 'tombstone__company-logo'));
+    body.appendChild(logoWrap);
+    if (deal.showCompanyName) body.appendChild(el('p', 'tombstone__company', deal.company));
+    body.appendChild(el('span', 'tombstone__rule'));
+    if (deal.amount) {
+      body.appendChild(el('p', 'tombstone__amount', deal.amount));
+      body.appendChild(el('p', 'tombstone__type', deal.type));
+    } else {
+      body.appendChild(el('p', 'tombstone__amount tombstone__amount--text', deal.type));
+    }
+    if (deal.description) body.appendChild(el('p', 'tombstone__desc', deal.description));
+    const meta = [deal.sector, deal.year].filter(Boolean).join(' · ');
+    if (meta) body.appendChild(el('p', 'tombstone__meta', meta));
+    card.appendChild(body);
+
+    const testimonial = resolveDealTestimonial(deal);
+    let panel = null;
+    let toggle = null;
+    if (testimonial || deal.announcement) {
+      const actions = el('div', 'tombstone__actions');
+      if (testimonial) {
+        toggle = el('button', 'tombstone__toggle');
+        toggle.type = 'button';
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-controls', `perspective-${deal.id}`);
+        toggle.innerHTML = '<span class="tombstone__toggle-label">Read the founder’s perspective</span><span class="tombstone__toggle-icon" aria-hidden="true">→</span>';
+        actions.appendChild(toggle);
+      }
+      if (deal.announcement) {
+        const link = el('a', 'tombstone__announcement', 'Announcement');
+        link.href = deal.announcement; link.target = '_blank'; link.rel = 'noopener';
+        link.appendChild(el('span', 'sr-only', ' (opens in a new tab)'));
+        actions.appendChild(link);
+      }
+      card.appendChild(actions);
+    }
+
+    const band = el('div', 'tombstone__band');
+    const parties = deal.counterparties || [];
+    const partyText = el('div', 'tombstone__party');
+    partyText.appendChild(el('span', 'tombstone__label', dealLabel(deal)));
+    partyText.appendChild(el('span', 'tombstone__names', parties.map((p) => p.name).join(' · ')));
+    band.appendChild(partyText);
+    const logos = parties.filter((p) => p.logo);
+    if (logos.length) {
+      const logoRow = el('div', 'tombstone__party-logos');
+      logos.forEach((p) => { const img = makeLogo(p.logo, '', 'tombstone__party-logo'); logoRow.appendChild(img); });
+      band.appendChild(logoRow);
+    }
+    card.appendChild(band);
+    nodes.push(card);
+
+    if (testimonial) {
+      panel = el('section', 'tombstone-panel');
+      panel.id = `perspective-${deal.id}`;
+      panel.setAttribute('aria-label', `Founder’s perspective: ${testimonial.name}, ${deal.company}`);
+      panel.hidden = true;
+      const fig = el('figure', 'tombstone-panel__inner');
+      const mark = el('span', 'tombstone-panel__mark', '“'); mark.setAttribute('aria-hidden', 'true');
+      const quoteCol = el('div', 'tombstone-panel__quote');
+      quoteCol.append(mark, el('blockquote', 'tombstone-panel__text', testimonial.quote));
+      const cap = el('figcaption', 'tombstone-panel__foot');
+      cap.appendChild(testimonialPerson(testimonial, 'tombstone-panel'));
+      const orgLogo = testimonialLogo(testimonial, 'tombstone-panel');
+      if (orgLogo) cap.appendChild(orgLogo);
+      fig.append(quoteCol, cap);
+      panel.appendChild(fig);
+      const close = el('button', 'tombstone-panel__close');
+      close.type = 'button';
+      close.innerHTML = '<span aria-hidden="true">×</span><span class="sr-only">Close founder’s perspective</span>';
+      panel.appendChild(close);
+      nodes.push(panel);
+      close.addEventListener('click', () => { setOpen(item, false); toggle.focus(); });
+    }
+    const item = { card, panel, toggle };
+    items.push(item);
+    if (toggle) toggle.addEventListener('click', () => setOpen(item, toggle.getAttribute('aria-expanded') !== 'true'));
+  });
+
+  // Point the open panel's notch at its tombstone (left / right column, or centred)
+  const placeNotch = (item) => {
+    const g = grid.getBoundingClientRect();
+    const c = item.card.getBoundingClientRect();
+    item.panel.style.setProperty('--notch', `${c.left - g.left + c.width / 2}px`);
+  };
+
+  function setOpen(item, open) {
+    items.forEach((other) => {
+      if (!other.panel) return;
+      const isOpen = open && other === item;
+      other.panel.hidden = !isOpen;
+      other.toggle.setAttribute('aria-expanded', String(isOpen));
+      other.toggle.querySelector('.tombstone__toggle-label').textContent = isOpen ? 'Hide the founder’s perspective' : 'Read the founder’s perspective';
+      other.card.classList.toggle('is-open', isOpen);
+    });
+    if (open) {
+      placeNotch(item);
+      item.panel.classList.remove('is-opening'); void item.panel.offsetWidth; item.panel.classList.add('is-opening');
+      const r = item.panel.getBoundingClientRect();
+      if (r.bottom > window.innerHeight) item.panel.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' });
+    }
+  }
+  window.addEventListener('resize', () => { const open = items.find((it) => it.panel && !it.panel.hidden); if (open) placeNotch(open); });
+
+  // An odd number of deals: centre the last tombstone so the final row stays balanced
+  if (deals.length % 2 === 1) items[items.length - 1].card.classList.add('tombstone--centred');
+  grid.replaceChildren(...nodes);
+  grid.classList.add('is-rendered');
 });
 
 // Expand/collapse: <button data-expand aria-controls="id" data-label-open="…" data-label-closed="…">

@@ -15,7 +15,8 @@
 //   approved                    false = draft awaiting the person's sign-off. Drafts are shown ONLY in the
 //                               local preview (marked "Draft"), never on the live website.
 //
-// Founder testimonials are also shown in the "Experience that delivers" carousel and on the Track Record page.
+// Founder testimonials are also shown in the "Experience that delivers" carousel, and on the Deals page when a deal
+// in transactions.js names them in its `testimonial` field.
 
 window.HEDLEY_TESTIMONIALS = [
   {

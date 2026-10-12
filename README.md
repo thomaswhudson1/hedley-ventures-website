@@ -34,8 +34,13 @@ Then open http://localhost:8080/. Press Ctrl+C to stop. Opening the HTML files d
 - `dist/index.html` — Home
 - `dist/about/index.html` — About
 - `dist/services/index.html` — Services
-- `dist/track-record/index.html` — Track Record
+- `dist/deals/index.html` — Deals (transaction tombstones, built from `dist/assets/data/transactions.js`)
+- `dist/track-record/index.html` — redirect from the old Track Record address to `/deals/`
 - `dist/contact/index.html` — Contact
 - `dist/assets/` — shared styles, scripts, fonts and image assets
+
+## Adding a deal
+
+Open `dist/assets/data/transactions.js`, copy an existing entry, paste it at the end of the list and change the details (the instructions are at the top of that file). Put the logos in `dist/assets/proof/`. The Deals page builds the new tombstone automatically. To show a founder testimonial, add it to `dist/assets/data/testimonials.js` and put its `id` in the deal's `testimonial` field.
 
 `FONT-LICENSES/` contains the open font licences. `v3-asset-manifest.json` records the source brochure page and crop for each extracted brochure asset. This export excludes the ChatGPT Sites repository history and hosting configuration; it is a clean starting point for your own GitHub repository.
