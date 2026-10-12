@@ -40,3 +40,48 @@ if (enquiryForm) {
     }
   });
 }
+
+// Home: credentials counters and founder testimonial carousel
+const statValues = document.querySelectorAll('.stat__value[data-count]');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (statValues.length && 'IntersectionObserver' in window && !reduceMotion) {
+  const render = (el, n) => { el.textContent = (el.dataset.prefix || '') + n + (el.dataset.suffix || ''); };
+  statValues.forEach((el) => render(el, 0));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      const el = entry.target; const target = Number(el.dataset.count); const start = performance.now();
+      const step = (now) => {
+        const t = Math.min((now - start) / 1500, 1);
+        render(el, Math.round(target * (1 - Math.pow(1 - t, 3))));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }, { threshold: 0.4 });
+  statValues.forEach((el) => observer.observe(el));
+}
+
+const carousel = document.querySelector('.proof-carousel');
+if (carousel) {
+  const slides = [...carousel.querySelectorAll('.proof-slide')];
+  const dots = [...carousel.querySelectorAll('.proof-carousel__dots button')];
+  let current = 0;
+  const show = (index) => {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      const active = i === current;
+      slide.hidden = !active;
+      slide.classList.toggle('is-active', active);
+      if (active) { slide.classList.remove('is-entering'); void slide.offsetWidth; slide.classList.add('is-entering'); }
+    });
+    dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === current)));
+  };
+  carousel.querySelectorAll('[data-dir]').forEach((btn) => btn.addEventListener('click', () => show(current + Number(btn.dataset.dir))));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
+  carousel.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') show(current - 1);
+    if (event.key === 'ArrowRight') show(current + 1);
+  });
+}

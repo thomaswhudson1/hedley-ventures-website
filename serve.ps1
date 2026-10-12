@@ -49,15 +49,21 @@ try {
     }
     if (-not $file) { $status = 404; $file = Join-Path $Root '404.html' }
 
-    $bytes = [IO.File]::ReadAllBytes($file)
-    $ext = [IO.Path]::GetExtension($file).ToLower()
-    $res.StatusCode = $status
-    $res.ContentType = $(if ($types.ContainsKey($ext)) { $types[$ext] } else { 'application/octet-stream' })
-    $res.Headers.Add('Cache-Control', 'no-store')
-    $res.ContentLength64 = $bytes.Length
-    $res.OutputStream.Write($bytes, 0, $bytes.Length)
-    $res.Close()
-    Write-Host "$status $path"
+    try {
+      $bytes = [IO.File]::ReadAllBytes($file)
+      $ext = [IO.Path]::GetExtension($file).ToLower()
+      $res.StatusCode = $status
+      $res.ContentType = $(if ($types.ContainsKey($ext)) { $types[$ext] } else { 'application/octet-stream' })
+      $res.Headers.Add('Cache-Control', 'no-store')
+      $res.ContentLength64 = $bytes.Length
+      # HEAD requests (used by some tools to check the server is up) must not include a body
+      if ($req.HttpMethod -ne 'HEAD') { $res.OutputStream.Write($bytes, 0, $bytes.Length) }
+      Write-Host "$status $path"
+    } catch {
+      Write-Host "Error serving $path : $($_.Exception.Message)"
+    } finally {
+      try { $res.Close() } catch {}
+    }
   }
 } finally {
   $listener.Stop()
