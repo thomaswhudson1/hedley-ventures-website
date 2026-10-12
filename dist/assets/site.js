@@ -203,15 +203,17 @@ const testimonialLogo = (t, prefix) => {
 const draftBadge = (t, prefix) => (t.approved ? null : el('span', `${prefix}__draft`, 'Draft – awaiting approval (preview only)'));
 
 // Options: data-scope="all" ignores the homepage flag; data-featured="true|false" filters on `featured`;
-// data-general="true" keeps only entries without a linked transaction;
+// data-general="true" keeps only entries without a linked transaction; data-ids="a,b" picks specific entries in that order;
 // data-card-class adds a layout variant to each card.
 document.querySelectorAll('[data-testimonials]').forEach((container) => {
   const scopeAll = container.getAttribute('data-scope') === 'all';
   const featured = container.getAttribute('data-featured');
-  const list = pickTestimonials(container.getAttribute('data-testimonials'), !scopeAll)
+  const ids = (container.getAttribute('data-ids') || '').split(',').map((s) => s.trim()).filter(Boolean);
+  let list = pickTestimonials(container.getAttribute('data-testimonials'), !scopeAll)
     .filter((t) => featured === null || String(Boolean(t.featured)) === featured)
-    .filter((t) => container.getAttribute('data-general') !== 'true' || !t.transaction)
-    .slice(0, Number(container.getAttribute('data-limit')) || Infinity);
+    .filter((t) => container.getAttribute('data-general') !== 'true' || !t.transaction);
+  if (ids.length) list = ids.map((id) => list.find((t) => t.id === id)).filter(Boolean);
+  list = list.slice(0, Number(container.getAttribute('data-limit')) || Infinity);
   if (!list.length) return;
   const start = Number(container.getAttribute('data-start-delay')) || 0;
   const variant = container.getAttribute('data-card-class');

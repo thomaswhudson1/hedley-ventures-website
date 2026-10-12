@@ -56,13 +56,13 @@ window.HEDLEY_TESTIMONIALS = [
     order: 5, homepage: false, approved: true
   },
   {
-    // DRAFT: Brad agreed (5 Sep 2026) to a testimonial drafted by Thomas. Add the agreed wording, then set approved: true.
+    // Wording supplied by Thomas as approved (Brad agreed on 5 Sep 2026). Booked it was formerly Licklist.
     id: 'brad-nobbs', featured: true, transaction: null,
     name: 'Brad Nobbs', title: 'Co-Founder & CEO', organisation: 'Booked it', category: 'founder',
-    quote: 'Testimonial wording to be supplied.',
+    quote: 'We first started working with Tom when we were running Licklist, a business heavily exposed to the nightlife industry. When COVID hit, we had to fundamentally rethink our business model and pivot to Bookedit. Tom stuck with us throughout that transition, supporting us over several years and ultimately helping us secure investment from Calculus Capital. He’s genuine, pragmatic and really understands both the fundraising process and the challenges founders face along the way.',
     headshot: '/assets/network/brad-nobbs.jpg',
     logo: { src: '/assets/network/booked-it.png', width: 483, height: 111, displayHeight: 28 },
-    order: 6, homepage: false, approved: false
+    order: 6, homepage: false, approved: true
   },
   {
     id: 'spencer-lake', featured: true, name: 'Spencer Lake', title: 'Partner', organisation: '13Books Capital', category: 'investor',

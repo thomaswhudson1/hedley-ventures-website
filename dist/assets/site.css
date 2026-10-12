@@ -245,3 +245,62 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 @media(max-width:1100px){.reputation__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.reputation{padding:24px 0 64px}.reputation__grid{grid-template-columns:1fr;gap:12px}.reputation__subhead{font-size:1.35rem}.reputation__subhead--ecosystem{margin-top:52px}.quote-card--stacked{padding:24px 22px 22px}.page-about .bio-credentials{grid-template-columns:1fr;gap:22px}}
 @media(prefers-reduced-motion:reduce){.reputation__more.is-opening{animation:none}.reputation__toggle-icon{transition:none}}@media(max-width:760px){.quote-card--stacked .quote-card__foot{min-height:0}}
+
+/* About: editorial refinement (Oct 2026) ------------------------------------ */
+.page-about .biography{gap:72px}
+.page-about .bio-credentials p{font-size:15.5px}
+.reputation{padding-bottom:88px}
+/* Featured investor pull-quote */
+.rep-feature{margin-bottom:16px}
+.quote-card--feature{display:grid;grid-template-columns:minmax(0,1fr) 250px;grid-template-rows:auto 1fr;column-gap:56px;padding:44px 52px 42px;background:#f8f6f2;border-color:#ddd5c8}
+.quote-card--feature .quote-card__mark{grid-column:1;font-size:64px;height:32px}
+.quote-card--feature .quote-card__text{grid-column:1;margin:14px 0 0;font-size:clamp(1.12rem,1.35vw,1.26rem);line-height:1.72;color:var(--navy)}
+.quote-card--feature .quote-card__foot{grid-column:2;grid-row:1/3;flex-direction:column;align-items:flex-start;justify-content:center;gap:18px;margin:0;padding:0 0 0 40px;border-top:0;border-left:1px solid #ddd5c8}
+.quote-card--feature .quote-card__person{flex-direction:column;align-items:flex-start;gap:14px}
+.quote-card--feature .quote-card__photo{width:96px;height:96px}
+.quote-card--feature .quote-card__name{font-size:17px}
+.reputation__grid--two{grid-template-columns:repeat(2,minmax(0,1fr))}
+/* Founder perspective: navy editorial band */
+.founders-feature{padding:88px 0 92px;background:var(--navy);color:var(--cream)}
+.founders-feature__head{margin-bottom:46px}
+.founders-feature .eyebrow{margin-bottom:18px;font-weight:600;font-size:13px;letter-spacing:.17em;color:#c2aa77}
+.founders-feature h2{font-size:clamp(2.2rem,2.85vw,2.9rem);line-height:1.08;letter-spacing:-.025em;color:#f4f1ec}
+.founders-feature h2 span{color:#b29a64}
+.founders-feature__grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:stretch}
+.quote-card--onnavy{padding:0;background:none;border:0;border-radius:0}
+.founders-feature__grid>.quote-card--onnavy:first-child{padding-right:56px}
+.founders-feature__grid>.quote-card--onnavy+.quote-card--onnavy{padding-left:56px;border-left:1px solid rgba(238,235,232,.18)}
+.quote-card--onnavy .quote-card__mark{color:#b29a64}
+.quote-card--onnavy .quote-card__text{margin:10px 0 30px;font-size:clamp(1.06rem,1.25vw,1.16rem);line-height:1.78;color:#ece8e1}
+.quote-card--onnavy .quote-card__foot{border-top:1px solid rgba(238,235,232,.18);padding-top:22px}
+.quote-card--onnavy .quote-card__photo{width:80px;height:80px}
+.quote-card--onnavy .quote-card__name{color:#fff;font-size:16px}
+.quote-card--onnavy .quote-card__role{color:rgba(238,235,232,.7)}
+.quote-card--onnavy .quote-card__logo{filter:brightness(0) invert(1);opacity:.85;mix-blend-mode:normal}
+/* EISA seminar photographic spread */
+.eco-spread{background:var(--cream);padding:92px 0 0}
+.eco-spread__inner{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,1fr)}
+.eco-spread__photo{margin:0;min-height:100%}
+.eco-spread__photo img{display:block;width:100%;height:100%;min-height:420px;object-fit:cover;object-position:40% 40%}
+.eco-spread__panel{display:flex;flex-direction:column;justify-content:center;padding:56px 56px 52px;background:var(--navy);color:var(--cream)}
+.eco-spread__panel .eyebrow{margin-bottom:18px;font-weight:600;font-size:13px;letter-spacing:.17em;color:#c2aa77}
+.eco-spread__panel h2{font-size:clamp(2rem,2.5vw,2.55rem);line-height:1.1;letter-spacing:-.02em;color:#f4f1ec}
+.eco-spread__copy{margin-top:20px;font-size:17px;line-height:1.7;color:rgba(238,235,232,.82);max-width:38ch}
+.eco-spread__caption{display:flex;align-items:center;gap:14px;margin-top:34px;font-size:14px;letter-spacing:.04em;color:rgba(238,235,232,.7)}
+.eco-spread__caption::before{content:"";width:28px;height:1px;background:#b29a64}
+/* Ecosystem endorsements: asymmetric */
+.eco-endorse{background:var(--cream);padding:64px 0 96px}
+.eco-endorse__grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:stretch}
+.eco-endorse__lead{display:grid}
+.eco-endorse__side{display:grid;gap:16px}
+.quote-card--lead{padding:40px 44px 34px}
+.quote-card--lead .quote-card__mark{font-size:60px;height:30px}
+.quote-card--lead .quote-card__text{margin:12px 0 28px;font-size:clamp(1.1rem,1.3vw,1.22rem);line-height:1.74}
+.quote-card--lead .quote-card__photo{width:84px;height:84px}
+.quote-card--side{padding:28px 32px 24px}
+.quote-card--side .quote-card__text{font-size:1.02rem;line-height:1.7;margin-bottom:22px}
+.quote-card--side .quote-card__logo,.quote-card--lead .quote-card__logo{max-width:170px}
+@media(max-width:980px){.quote-card--feature{grid-template-columns:1fr;padding:34px 30px 30px}.quote-card--feature .quote-card__foot{grid-column:1;grid-row:auto;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:26px;padding:22px 0 0;border-left:0;border-top:1px solid #ddd5c8}.quote-card--feature .quote-card__person{flex-direction:row;align-items:center}
+.founders-feature__grid{grid-template-columns:1fr}.founders-feature__grid>.quote-card--onnavy:first-child{padding:0 0 40px}.founders-feature__grid>.quote-card--onnavy+.quote-card--onnavy{padding:40px 0 0;border-left:0;border-top:1px solid rgba(238,235,232,.18)}
+.eco-spread__inner{grid-template-columns:1fr}.eco-spread__photo img{min-height:0;aspect-ratio:3/2}.eco-endorse__grid{grid-template-columns:1fr}}
+@media(max-width:760px){.reputation__grid--two{grid-template-columns:1fr}.founders-feature{padding:60px 0 64px}.founders-feature__head{margin-bottom:32px}.eco-spread{padding-top:64px}.eco-spread__panel{padding:36px 24px 34px}.eco-endorse{padding:48px 0 64px}.quote-card--lead,.quote-card--side{padding:24px 22px 22px}.quote-card--side .quote-card__foot,.quote-card--lead .quote-card__foot{flex-wrap:wrap}.quote-card--feature{padding:26px 22px 24px}}@media(min-width:981px){.quote-card--lead .quote-card__mark{margin-top:auto}.quote-card--lead .quote-card__text{font-size:clamp(1.2rem,1.55vw,1.4rem);line-height:1.7}}
