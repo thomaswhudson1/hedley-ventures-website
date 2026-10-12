@@ -213,3 +213,35 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 @media(max-width:760px){.proof-slide{grid-template-columns:1fr}.proof-slide__photo{width:116px;height:116px}.quote-card__photo{width:64px;height:64px}.eco-slide__photo{width:80px;height:80px}.eco-slide__text{font-size:1.06rem}.proof-slide blockquote{font-size:1.06rem}}
 /* Home: tighter gap now that the process timeline no longer sits between these sections */
 @media(min-width:761px){.support+.deals-home{padding-top:30px}}
+
+/* About: credentials refinement ---------------------------------------------- */
+.page-about .bio-credentials{gap:30px 44px;margin-top:40px}
+.page-about .bio-credentials>div{grid-template-columns:54px 1fr;gap:18px;align-items:start}
+.page-about .bio-credentials img{width:54px;height:46px;object-fit:contain;object-position:center top;mix-blend-mode:normal;margin-top:2px}
+.page-about .bio-credentials h2{font-size:18.5px;line-height:1.32;letter-spacing:-.01em;text-wrap:balance}
+.page-about .bio-credentials p{margin-top:8px;font-size:15px;line-height:1.55;color:var(--muted);max-width:30ch}
+
+/* About: Our reputation ------------------------------------------------------ */
+.reputation{background:var(--cream);padding:40px 0 96px}
+.reputation__head{margin-bottom:44px}
+.reputation .eyebrow{margin-bottom:18px;font-weight:600;font-size:13px;letter-spacing:.17em;color:var(--gold-dark)}
+.reputation h2{font-size:clamp(2.2rem,2.85vw,2.9rem);line-height:1.08;letter-spacing:-.025em;color:var(--navy)}
+.reputation h2 span{color:var(--gold)}
+.reputation__intro{margin-top:12px;font-size:18px;line-height:1.55;color:var(--muted)}
+.reputation__subhead{display:flex;align-items:center;gap:22px;margin-bottom:22px;font-size:1.55rem;line-height:1.2;letter-spacing:-.01em;color:var(--navy)}
+.reputation__subhead::after{content:"";flex:1;height:1px;background:#d9d0c1}
+.reputation__subhead--ecosystem{margin-top:72px}
+.reputation__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.reputation__more{margin-top:16px}
+.reputation__more.is-opening{animation:proof-fade .45s ease both}
+.reputation__toggle{display:inline-flex;align-items:center;gap:12px;margin-top:26px;padding:0 0 7px;border:0;border-bottom:1px solid var(--gold);background:none;font:inherit;font-size:17px;color:var(--navy);cursor:pointer}
+.reputation__toggle-icon{color:var(--gold);transition:transform .25s ease}
+.reputation__toggle[aria-expanded="true"] .reputation__toggle-icon{transform:rotate(180deg)}
+.reputation__toggle:hover{color:var(--gold-dark)}
+.quote-card--stacked{padding:30px 30px 26px}
+.quote-card--stacked .quote-card__text{font-size:clamp(1rem,1.05vw,1.06rem);line-height:1.72;margin-bottom:24px}
+.quote-card--stacked .quote-card__foot{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:16px;padding-top:20px;min-height:150px}
+.quote-card--stacked .quote-card__logo{max-width:170px}
+@media(max-width:1100px){.reputation__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.reputation{padding:24px 0 64px}.reputation__grid{grid-template-columns:1fr;gap:12px}.reputation__subhead{font-size:1.35rem}.reputation__subhead--ecosystem{margin-top:52px}.quote-card--stacked{padding:24px 22px 22px}.page-about .bio-credentials{grid-template-columns:1fr;gap:22px}}
+@media(prefers-reduced-motion:reduce){.reputation__more.is-opening{animation:none}.reputation__toggle-icon{transition:none}}@media(max-width:760px){.quote-card--stacked .quote-card__foot{min-height:0}}

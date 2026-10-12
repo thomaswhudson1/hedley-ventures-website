@@ -202,12 +202,19 @@ const testimonialLogo = (t, prefix) => {
 
 const draftBadge = (t, prefix) => (t.approved ? null : el('span', `${prefix}__draft`, 'Draft – awaiting approval (preview only)'));
 
+// Options: data-scope="all" ignores the homepage flag; data-featured="true|false" filters on `featured`;
+// data-card-class adds a layout variant to each card.
 document.querySelectorAll('[data-testimonials]').forEach((container) => {
-  const list = pickTestimonials(container.getAttribute('data-testimonials'), true).slice(0, Number(container.getAttribute('data-limit')) || Infinity);
+  const scopeAll = container.getAttribute('data-scope') === 'all';
+  const featured = container.getAttribute('data-featured');
+  const list = pickTestimonials(container.getAttribute('data-testimonials'), !scopeAll)
+    .filter((t) => featured === null || String(Boolean(t.featured)) === featured)
+    .slice(0, Number(container.getAttribute('data-limit')) || Infinity);
   if (!list.length) return;
   const start = Number(container.getAttribute('data-start-delay')) || 0;
+  const variant = container.getAttribute('data-card-class');
   container.replaceChildren(...list.map((t, i) => {
-    const card = el('figure', 'quote-card reveal');
+    const card = el('figure', `quote-card reveal${variant ? ` ${variant}` : ''}`);
     card.style.setProperty('--reveal-delay', `${start + i * 100}ms`);
     const badge = draftBadge(t, 'quote-card'); if (badge) card.appendChild(badge);
     const mark = el('span', 'quote-card__mark', '“'); mark.setAttribute('aria-hidden', 'true');
@@ -275,6 +282,23 @@ document.querySelectorAll('[data-testimonial-carousel]').forEach((container) => 
   container.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') show(current - 1);
     if (e.key === 'ArrowRight') show(current + 1);
+  });
+});
+
+// Expand/collapse: <button data-expand aria-controls="id" data-label-open="…" data-label-closed="…">
+document.querySelectorAll('[data-expand]').forEach((button) => {
+  const region = document.getElementById(button.getAttribute('aria-controls'));
+  if (!region) return;
+  const label = button.querySelector('[data-expand-label]') || button;
+  button.hidden = false;
+  region.hidden = true;
+  button.setAttribute('aria-expanded', 'false');
+  button.addEventListener('click', () => {
+    const open = button.getAttribute('aria-expanded') !== 'true';
+    button.setAttribute('aria-expanded', String(open));
+    region.hidden = !open;
+    label.textContent = button.getAttribute(open ? 'data-label-open' : 'data-label-closed');
+    if (open) { region.classList.remove('is-opening'); void region.offsetWidth; region.classList.add('is-opening'); }
   });
 });
 
