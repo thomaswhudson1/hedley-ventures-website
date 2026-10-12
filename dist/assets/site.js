@@ -160,6 +160,124 @@ document.querySelectorAll('[data-transactions]').forEach((container) => {
   container.classList.add('is-rendered');
 });
 
+// Testimonials: built from /assets/data/testimonials.js.
+// Unapproved drafts appear only in the local preview (marked "Draft"), never on the live site.
+const isLocalPreview = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+const pickTestimonials = (category, homepageOnly) => (Array.isArray(window.HEDLEY_TESTIMONIALS) ? window.HEDLEY_TESTIMONIALS : [])
+  .filter((t) => t.category === category && (!homepageOnly || t.homepage) && (t.approved || isLocalPreview))
+  .sort((a, b) => a.order - b.order);
+
+const el = (tag, className, text) => {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text) node.textContent = text;
+  return node;
+};
+
+const testimonialPerson = (t, prefix) => {
+  const person = el('div', `${prefix}__person`);
+  if (t.headshot) {
+    const img = el('img', `${prefix}__photo`);
+    img.src = t.headshot; img.alt = ''; img.width = 120; img.height = 120; img.loading = 'lazy';
+    person.appendChild(img);
+  } else {
+    const initials = el('span', `${prefix}__photo ${prefix}__photo--placeholder`, t.name.split(' ').map((w) => w[0]).join('').slice(0, 2));
+    initials.setAttribute('aria-hidden', 'true');
+    person.appendChild(initials);
+  }
+  const who = el('div', `${prefix}__who`);
+  who.appendChild(el('strong', `${prefix}__name`, t.name));
+  who.appendChild(el('span', `${prefix}__role`, [t.title, t.organisation].filter(Boolean).join(', ')));
+  person.appendChild(who);
+  return person;
+};
+
+const testimonialLogo = (t, prefix) => {
+  if (!t.logo) return null;
+  const img = el('img', `${prefix}__logo${t.logo.blend ? ` ${prefix}__logo--blend` : ''}${t.logo.mono ? ` ${prefix}__logo--mono` : ''}`);
+  img.src = t.logo.src; img.alt = t.organisation; img.width = t.logo.width; img.height = t.logo.height; img.loading = 'lazy';
+  img.style.setProperty('--logo-h', `${t.logo.displayHeight}px`);
+  return img;
+};
+
+const draftBadge = (t, prefix) => (t.approved ? null : el('span', `${prefix}__draft`, 'Draft – awaiting approval (preview only)'));
+
+document.querySelectorAll('[data-testimonials]').forEach((container) => {
+  const list = pickTestimonials(container.getAttribute('data-testimonials'), true).slice(0, Number(container.getAttribute('data-limit')) || Infinity);
+  if (!list.length) return;
+  const start = Number(container.getAttribute('data-start-delay')) || 0;
+  container.replaceChildren(...list.map((t, i) => {
+    const card = el('figure', 'quote-card reveal');
+    card.style.setProperty('--reveal-delay', `${start + i * 100}ms`);
+    const badge = draftBadge(t, 'quote-card'); if (badge) card.appendChild(badge);
+    const mark = el('span', 'quote-card__mark', '“'); mark.setAttribute('aria-hidden', 'true');
+    card.appendChild(mark);
+    card.appendChild(el('blockquote', 'quote-card__text', t.quote));
+    const foot = el('figcaption', 'quote-card__foot');
+    foot.appendChild(testimonialPerson(t, 'quote-card'));
+    const logo = testimonialLogo(t, 'quote-card'); if (logo) foot.appendChild(logo);
+    card.appendChild(foot);
+    return card;
+  }));
+});
+
+document.querySelectorAll('[data-testimonial-carousel]').forEach((container) => {
+  const list = pickTestimonials(container.getAttribute('data-testimonial-carousel'), true);
+  if (!list.length) return;
+  const slidesWrap = el('div', 'eco-carousel__slides');
+  slidesWrap.setAttribute('aria-live', 'polite');
+  const slides = list.map((t, i) => {
+    const slide = el('figure', 'eco-slide');
+    slide.setAttribute('aria-roledescription', 'slide');
+    slide.setAttribute('aria-label', `${i + 1} of ${list.length}`);
+    if (i) slide.hidden = true;
+    const badge = draftBadge(t, 'eco-slide'); if (badge) slide.appendChild(badge);
+    const mark = el('span', 'eco-slide__mark', '“'); mark.setAttribute('aria-hidden', 'true');
+    slide.appendChild(mark);
+    slide.appendChild(el('blockquote', 'eco-slide__text', t.quote));
+    const foot = el('figcaption', 'eco-slide__foot');
+    foot.appendChild(testimonialPerson(t, 'eco-slide'));
+    const logo = testimonialLogo(t, 'eco-slide');
+    if (logo) foot.appendChild(logo); else foot.appendChild(el('span', 'eco-slide__org', t.organisation));
+    slide.appendChild(foot);
+    slidesWrap.appendChild(slide);
+    return slide;
+  });
+  container.appendChild(slidesWrap);
+  if (slides.length < 2) return;
+
+  const controls = el('div', 'eco-carousel__controls');
+  const dots = el('div', 'eco-carousel__dots');
+  let current = 0;
+  const show = (index) => {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((s, i) => {
+      s.hidden = i !== current;
+      if (i === current) { s.classList.remove('is-entering'); void s.offsetWidth; s.classList.add('is-entering'); }
+    });
+    [...dots.children].forEach((d, i) => d.setAttribute('aria-current', String(i === current)));
+  };
+  const arrow = (dir, label, path) => {
+    const b = el('button', 'eco-carousel__arrow');
+    b.type = 'button'; b.setAttribute('aria-label', label);
+    b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${path}" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
+    b.addEventListener('click', () => show(current + dir));
+    return b;
+  };
+  slides.forEach((_, i) => {
+    const d = el('button');
+    d.type = 'button'; d.setAttribute('aria-label', `Show endorsement ${i + 1}`); d.setAttribute('aria-current', String(i === 0));
+    d.addEventListener('click', () => show(i));
+    dots.appendChild(d);
+  });
+  controls.append(arrow(-1, 'Previous endorsement', 'M15 4l-8 8 8 8'), dots, arrow(1, 'Next endorsement', 'M9 4l8 8-8 8'));
+  container.appendChild(controls);
+  container.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+});
+
 // Scroll reveal: content is visible by default; JS only adds the hidden start state when it can animate
 const revealItems = document.querySelectorAll('.reveal');
 if (revealItems.length && 'IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
