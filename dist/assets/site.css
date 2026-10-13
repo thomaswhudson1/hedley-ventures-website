@@ -695,3 +695,6 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .service-card__body{position:static;z-index:auto}.service-card .service-icon{position:relative;z-index:1}
 /* Services: soft navy shade at the foot of each photo so the cream ring around the icon always reads */
 .service-card__photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(to top,rgba(0,30,42,.38),rgba(0,30,42,0));pointer-events:none;z-index:1}
+/* Deals: bands with two investor logos stack the logos under the names on narrower screens */
+.tombstone__label{white-space:nowrap}
+@media(max-width:1000px){.tombstone__band:has(.tombstone__party-logo+.tombstone__party-logo){flex-direction:column;align-items:flex-start;gap:12px}.tombstone__band:has(.tombstone__party-logo+.tombstone__party-logo) .tombstone__party-logos{justify-content:flex-start;flex-wrap:nowrap;gap:20px}}

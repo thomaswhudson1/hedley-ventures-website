@@ -119,5 +119,112 @@ window.HEDLEY_TRANSACTIONS = [
     announcement: null,
     advisedBy: 'PwC Raise | Ventures',
     featured: true
+  },
+  {
+    id: 'zapnito',
+    order: 5,
+    company: 'Zapnito',
+    companyLogo: { src: '/assets/proof/zapnito.svg', width: 1000, height: 276, displayHeight: 26 },
+    kind: 'investment',
+    type: 'Growth capital investment',
+    amount: '£3.3m',
+    currency: 'GBP',
+    counterparties: [
+      { name: 'Octopus Ventures', logo: { src: '/assets/network/investors/octopus-ventures.png', width: 275, height: 117, displayHeight: 38 } }
+    ],
+    counterpartyLabel: null,
+    year: null,
+    sector: null,
+    description: null,
+    testimonial: null,
+    announcement: null,
+    advisedBy: 'PwC Raise | Ventures',
+    featured: false
+  },
+  {
+    id: 'kore-labs',
+    order: 6,
+    company: 'Kore Labs',
+    companyLogo: { src: '/assets/network/kore-labs.svg', width: 400, height: 128, displayHeight: 30 },
+    kind: 'investment',
+    type: 'Growth capital investment',
+    amount: '£3m',
+    currency: 'GBP',
+    counterparties: [
+      { name: 'Symvan', logo: { src: '/assets/proof/symvan.svg', width: 374, height: 58, displayHeight: 19 } },
+      { name: 'Artorius', logo: { src: '/assets/proof/artorius.png', width: 339, height: 66, displayHeight: 21 } }
+    ],
+    counterpartyLabel: null,
+    year: null,
+    sector: null,
+    description: null,
+    testimonial: 'sabrina-del-prete',
+    announcement: null,
+    advisedBy: 'PwC Raise | Ventures',
+    featured: false
+  },
+  {
+    id: 'dayrize',
+    order: 7,
+    company: 'Dayrize',
+    companyLogo: { src: '/assets/proof/dayrize.svg', width: 1000, height: 496, displayHeight: 36 },
+    kind: 'investment',
+    type: 'Growth capital investment',
+    amount: '£3.5m',
+    currency: 'GBP',
+    counterparties: [
+      { name: 'Gresham House Ventures', logo: { src: '/assets/proof/gresham-house.svg', width: 286, height: 112, displayHeight: 40 } }
+    ],
+    counterpartyLabel: null,
+    year: null,
+    sector: null,
+    description: null,
+    testimonial: null,
+    announcement: null,
+    advisedBy: 'PwC Raise | Ventures',
+    featured: false
+  },
+  {
+    id: 'urbanchain',
+    order: 8,
+    company: 'UrbanChain',
+    companyLogo: { src: '/assets/proof/urbanchain.svg', width: 261, height: 52, displayHeight: 25 },
+    kind: 'investment',
+    type: 'Growth capital investment',
+    amount: '£5.25m',
+    currency: 'GBP',
+    counterparties: [
+      { name: 'Eurazeo', logo: { src: '/assets/proof/eurazeo.svg', width: 1478, height: 261, displayHeight: 22 } }
+    ],
+    counterpartyLabel: null,
+    year: null,
+    sector: null,
+    description: null,
+    testimonial: null,
+    announcement: null,
+    advisedBy: 'PwC Raise | Ventures',
+    featured: false
+  },
+  {
+    id: 'studentcrowd',
+    order: 9,
+    company: 'StudentCrowd',
+    companyLogo: { src: '/assets/proof/studentcrowd.svg', width: 121, height: 33, displayHeight: 34 },
+    kind: 'investment',
+    type: 'Growth capital investment',
+    amount: '£2.55m',
+    currency: 'GBP',
+    counterparties: [
+      { name: 'MEIF', logo: { src: '/assets/proof/meif.png', width: 442, height: 146, displayHeight: 34 } },
+      { name: 'Mercia', logo: { src: '/assets/network/mercia.png', width: 277, height: 103, displayHeight: 32 } }
+    ],
+    counterpartyLabel: null,
+    year: null,
+    sector: null,
+    description: null,
+    testimonial: null,
+    announcement: null,
+    advisedBy: 'PwC Raise | Ventures',
+    featured: false
   }
 ];
