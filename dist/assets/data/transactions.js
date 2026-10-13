@@ -30,7 +30,8 @@
 //   announcement       Public announcement URL (adds a small "Announcement" link). null = no link
 //   advisedBy          Advisory firm at the time, e.g. 'PwC Raise | Ventures' (for reference; the Deals page shows the
 //                      PwC attribution above the tombstones — update that line in /deals/index.html if this changes)
-//   featured           true = eligible for the homepage "Selected transactions" section
+//   featured           true = shown in the homepage "Selected transactions" section (up to four)
+//   featuredOrder      Optional position on the homepage (1 = first); otherwise order is used
 //
 // Only add details that are confirmed and approved for publication.
 
@@ -54,7 +55,8 @@ window.HEDLEY_TRANSACTIONS = [
     testimonial: 'albert-franquesa',
     announcement: null,
     advisedBy: 'PwC Raise | Ventures',
-    featured: true
+    featured: true,
+    featuredOrder: 1
   },
   {
     id: 'secretarium',
@@ -75,7 +77,8 @@ window.HEDLEY_TRANSACTIONS = [
     testimonial: 'bertrand-foing',
     announcement: null,
     advisedBy: 'PwC Raise | Ventures',
-    featured: true
+    featured: true,
+    featuredOrder: 2
   },
   {
     id: 'plumm',
@@ -96,7 +99,7 @@ window.HEDLEY_TRANSACTIONS = [
     testimonial: 'asif-amin',
     announcement: null,
     advisedBy: 'PwC Raise | Ventures',
-    featured: true
+    featured: false
   },
   {
     id: 'walkup',
@@ -118,7 +121,8 @@ window.HEDLEY_TRANSACTIONS = [
     testimonial: 'amos-teshuva',
     announcement: null,
     advisedBy: 'PwC Raise | Ventures',
-    featured: true
+    featured: true,
+    featuredOrder: 4
   },
   {
     id: 'zapnito',
@@ -188,7 +192,7 @@ window.HEDLEY_TRANSACTIONS = [
     id: 'urbanchain',
     order: 8,
     company: 'UrbanChain',
-    companyLogo: { src: '/assets/proof/urbanchain.svg', width: 261, height: 52, displayHeight: 25 },
+    companyLogo: { src: '/assets/proof/urbanchain.svg', width: 261, height: 52, displayHeight: 29 },
     kind: 'investment',
     type: 'Growth capital investment',
     amount: '£5.25m',
@@ -203,7 +207,8 @@ window.HEDLEY_TRANSACTIONS = [
     testimonial: null,
     announcement: null,
     advisedBy: 'PwC Raise | Ventures',
-    featured: false
+    featured: true,
+    featuredOrder: 3
   },
   {
     id: 'studentcrowd',

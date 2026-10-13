@@ -154,7 +154,9 @@ document.querySelectorAll('[data-transactions]').forEach((container) => {
   const deals = sortedDeals();
   const mode = container.getAttribute('data-transactions');
   const limit = Number(container.getAttribute('data-limit')) || Infinity;
-  const list = (mode === 'featured' ? deals.filter((d) => d.featured) : deals).slice(0, limit);
+  const list = (mode === 'featured'
+    ? deals.filter((d) => d.featured).sort((a, b) => (a.featuredOrder ?? a.order ?? 999) - (b.featuredOrder ?? b.order ?? 999))
+    : deals).slice(0, limit);
   if (!list.length) return;
   container.replaceChildren(...list.map(renderTransactionCard));
   container.classList.add('is-rendered');

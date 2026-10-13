@@ -125,7 +125,7 @@ window.HEDLEY_TESTIMONIALS = [
     id: 'tom-wilde', featured: true, name: 'Tom Wilde', title: 'Head of Tax', organisation: 'Shoosmiths', category: 'ecosystem',
     quote: 'Tom and I have worked closely together for many years, particularly on EIS and VCT matters. He has a great network across the venture capital ecosystem, knows when to bring in the right specialist expertise and has always been an active contributor to the community, including through EISA where he has hosted the Spring Technical Seminar on numerous occasions.',
     headshot: '/assets/network/tom-wilde.jpg',
-    logo: { src: '/assets/network/shoosmiths.png', width: 283, height: 43, displayHeight: 18 },
-    order: 3, homepage: false, approved: true
+    logo: { src: '/assets/network/shoosmiths.png', width: 283, height: 43, displayHeight: 18, mono: true },
+    order: 3, homepage: true, approved: true
   }
 ];

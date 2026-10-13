@@ -706,3 +706,12 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .tombstone__logo--named .tombstone__company-logo{height:42px}
 .tombstone__logo--named .tombstone__company{margin:0;font-size:1.15rem;line-height:1.1}
 @media(max-width:700px){.tombstone__logo--named .tombstone__company-logo{height:34px}.tombstone__logo--named .tombstone__company{font-size:1.05rem}}
+/* Navigation: Contact as a restrained gold button (all pages share this header) */
+.site-header nav a[href="/contact/"]{display:inline-flex;align-items:center;padding:9px 18px;border:1px solid #98794E;border-radius:2px;background:#846a3f;color:#fff;font-weight:500;letter-spacing:.01em;transition:background-color .2s ease,border-color .2s ease,color .2s ease}
+.site-header nav a[href="/contact/"]:hover,.site-header nav a[href="/contact/"][aria-current]{background:#98794E;border-color:#b29a64;color:#fff}
+.site-header nav a[href="/contact/"]:focus-visible{outline:2px solid #c2aa77;outline-offset:3px}
+/* Ecosystem carousel: slides share one grid cell so the panel keeps the height of the longest quote */
+.eco-carousel__slides{display:grid}
+.eco-slide{grid-area:1/1}
+.eco-slide[hidden]{display:block;visibility:hidden}
+@media(max-width:760px){.site-header nav a[href="/contact/"]{align-self:flex-start;justify-content:center;margin-top:18px;padding:12px 24px;border-bottom:1px solid #98794E}}
