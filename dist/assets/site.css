@@ -693,3 +693,5 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .route__finish.is-complete path{stroke:#fff}
 @media(prefers-reduced-motion:reduce){.service-card,.route__finish circle,.route__finish path{transition:none}}
 .service-card__body{position:static;z-index:auto}.service-card .service-icon{position:relative;z-index:1}
+/* Services: soft navy shade at the foot of each photo so the cream ring around the icon always reads */
+.service-card__photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(to top,rgba(0,30,42,.38),rgba(0,30,42,0));pointer-events:none;z-index:1}
