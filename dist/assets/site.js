@@ -468,8 +468,14 @@ if (journeyRoot && journeyStages.length) {
   const start = document.createElementNS(svgNS, 'circle');
   start.setAttribute('class', 'route__start');
   start.setAttribute('r', '5');
-  const flag = document.createElementNS(svgNS, 'path');
-  flag.setAttribute('class', 'route__flag');
+  // Finish marker: a tick in a circle (completion); fills navy once the final stage is open
+  const flag = document.createElementNS(svgNS, 'g');
+  flag.setAttribute('class', 'route__finish');
+  const finishRing = document.createElementNS(svgNS, 'circle');
+  finishRing.setAttribute('r', '10');
+  const finishTick = document.createElementNS(svgNS, 'path');
+  finishTick.setAttribute('d', 'M-4.2 0.4 L-1.2 3.4 L4.4 -3');
+  flag.append(finishRing, finishTick);
   svg.append(trail, travelled, start, flag);
 
   const list = el('ol', 'route__stops');
@@ -538,7 +544,7 @@ if (journeyRoot && journeyStages.length) {
     start.style.display = flag.style.display = across ? '' : 'none';
     start.setAttribute('cx', first[0] + 5);
     start.setAttribute('cy', first[1]);
-    flag.setAttribute('d', `M${last[0]} ${last[1] + 6}V${last[1] - 20}l-14 5 14 5`);
+    flag.setAttribute('transform', `translate(${box.width - 12} ${last[1]})`);
   };
 
   const open = (index, focus) => {
@@ -548,6 +554,7 @@ if (journeyRoot && journeyStages.length) {
       item.classList.toggle('is-open', i === current);
       item.classList.toggle('is-passed', i < current);
     });
+    flag.classList.toggle('is-complete', current === stops.length - 1);
     if (focus) stops[current].btn.focus();
     draw();
   };
