@@ -227,7 +227,12 @@ document.querySelectorAll('[data-testimonials]').forEach((container) => {
     const badge = draftBadge(t, 'quote-card'); if (badge) card.appendChild(badge);
     const mark = el('span', 'quote-card__mark', '“'); mark.setAttribute('aria-hidden', 'true');
     card.appendChild(mark);
-    card.appendChild(el('blockquote', 'quote-card__text', t.quote));
+    const text = el('blockquote', 'quote-card__text');
+    // data-lead-sentence="true": wrap the opening sentence so it can be set larger (wording unchanged)
+    const split = container.getAttribute('data-lead-sentence') === 'true' && t.quote.match(/^(.+?[.!?])\s+([\s\S]+)$/);
+    if (split) text.append(el('span', 'quote-card__lead', split[1]), ' ', el('span', 'quote-card__rest', split[2]));
+    else text.textContent = t.quote;
+    card.appendChild(text);
     const foot = el('figcaption', 'quote-card__foot');
     foot.appendChild(testimonialPerson(t, 'quote-card'));
     const logo = testimonialLogo(t, 'quote-card'); if (logo) foot.appendChild(logo);
