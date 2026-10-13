@@ -421,3 +421,34 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 @media(max-width:1000px){.tombstone__body{padding:44px 28px 34px}.tombstone__band{padding:18px 24px}.tombstone__party-logo{max-width:130px}.tombstone-panel{padding:40px 40px 34px}.tombstone-panel__inner{grid-template-columns:1fr;gap:26px}.tombstone-panel__foot{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:22px 0 0;border-left:0;border-top:1px solid #ddd5c8}.tombstone-panel__person{flex-direction:row;align-items:center}.tombstone-panel__photo{width:64px;height:64px}}
 @media(max-width:700px){.deals-intro{padding:40px 0 30px}.deals-portfolio{padding:34px 0 72px}.tombstones{grid-template-columns:1fr;gap:18px}.tombstone--centred{width:100%}.tombstone__body{padding:40px 22px 30px}.tombstone__logo{height:60px}.tombstone__company-logo{height:calc(var(--logo-h,28px) * 1.15)}.tombstone__rule{margin:24px 0 20px}.tombstone__actions{padding:0 22px 24px}.tombstone__band{min-height:84px;padding:16px 20px}.tombstone__party-logo{height:calc(var(--logo-h,26px) * .8);max-width:120px}.tombstone-panel{padding:34px 22px 26px}.tombstone-panel::before{left:50%}.tombstone-panel__text{font-size:1.1rem}}
 .tombstone__company{margin-top:12px;font-family:DMSerif,Georgia,serif;font-size:1.35rem;line-height:1.2;color:var(--navy)}.tombstone__logo+.tombstone__company+.tombstone__rule{margin-top:22px}
+/* Header: whole logo links home, with hover and keyboard focus (all pages) */
+.site-header .brand{cursor:pointer;transition:opacity .2s ease}
+.site-header .brand:hover{opacity:.8}
+.site-header .brand:focus-visible{outline:2px solid var(--gold);outline-offset:6px}
+.site-header nav a:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+/* Homepage hero: typography, calls to action and one-time entrance */
+.page-home .hero h1 .hero-line{display:block}
+.page-home .hero h1 .hero-line--1{color:inherit}
+.page-home .hero h1{line-height:1.06}
+.page-home .hero>.wrap>.lead{max-width:600px;margin-top:34px;line-height:1.65}
+.page-home .hero-actions{gap:38px;margin-top:44px}
+.page-home .hero .hero-primary{gap:12px;min-height:50px;padding:13px 26px;background:transparent;border:1px solid var(--gold);color:#fff;font-weight:500;letter-spacing:.01em;transition:background-color .25s ease,border-color .25s ease}
+.hero-primary__arrow{flex-shrink:0;color:#c2aa77;transition:transform .25s ease}
+.page-home .hero .hero-primary:hover{background:rgba(158,135,85,.14);border-color:#c2aa77;color:#fff}
+.page-home .hero .hero-primary:hover .hero-primary__arrow{transform:translate(2px,-2px)}
+.page-home .hero-secondary{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0;border-bottom:0;font-size:15px;font-weight:500;color:#fff;background:linear-gradient(var(--gold),var(--gold)) no-repeat 0 calc(100% - 8px)/0 1px,linear-gradient(rgba(238,235,232,.28),rgba(238,235,232,.28)) no-repeat 0 calc(100% - 8px)/100% 1px;transition:background-size .35s ease}
+.hero-secondary__arrow{color:#c2aa77;transition:transform .25s ease}
+.page-home .hero-secondary:hover{color:#fff;background-size:100% 1px,100% 1px}
+.page-home .hero-secondary:hover .hero-secondary__arrow{transform:translateX(3px)}
+.page-home .hero-primary:focus-visible,.page-home .hero-secondary:focus-visible{outline:2px solid var(--gold);outline-offset:5px}
+@keyframes heroFade{from{opacity:0}to{opacity:1}}
+@keyframes heroRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes heroRiseSmall{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:no-preference){
+.page-home .hero-line--1{animation:heroRise .6s cubic-bezier(.2,.7,.2,1) .15s both}
+.page-home .hero-line--2{animation:heroRise .6s cubic-bezier(.2,.7,.2,1) .27s both}
+.page-home .hero>.wrap>.lead{animation:heroRiseSmall .45s cubic-bezier(.2,.7,.2,1) .45s both}
+.page-home .hero-actions{animation:heroRiseSmall .4s cubic-bezier(.2,.7,.2,1) .65s both}}
+@media(prefers-reduced-motion:no-preference) and (min-width:761px){.page-home .site-header nav{animation:heroFade .3s ease both}}
+@media(prefers-reduced-motion:reduce){.site-header .brand,.page-home .hero .hero-primary,.page-home .hero-secondary,.hero-primary__arrow,.hero-secondary__arrow{transition:none}}
+@media(max-width:760px){.page-home .hero>.wrap>.lead{margin-top:26px}.page-home .hero-actions{flex-direction:column;align-items:flex-start;gap:14px;margin-top:34px}.page-home .hero .hero-primary{min-height:50px}}
