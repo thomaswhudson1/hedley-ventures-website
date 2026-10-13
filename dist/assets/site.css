@@ -718,3 +718,6 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 /* Contact button: softer tinted treatment */
 .site-header nav a[href="/contact/"]{background:rgba(152,121,78,.16);border-color:rgba(194,170,119,.6);color:#eadcb8;font-weight:500}
 .site-header nav a[href="/contact/"]:hover,.site-header nav a[href="/contact/"][aria-current]{background:rgba(152,121,78,.32);border-color:#c2aa77;color:#f6efdc}
+/* Contact button: tighter box */
+.site-header nav a[href="/contact/"]{padding:5px 12px;border-color:rgba(194,170,119,.45)}
+@media(max-width:760px){.site-header nav a[href="/contact/"]{padding:8px 16px;margin-top:16px}}
