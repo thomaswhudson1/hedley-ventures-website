@@ -640,3 +640,28 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .ed-quote--eco-lead .quote-card__photo{width:64px;height:64px}}
 @media(min-width:981px){.eco-endorse__grid{align-items:center}.eco-endorse__side{padding-top:0}}
 .ed-quote--more .quote-card__foot{flex-direction:column;align-items:flex-start;gap:12px}
+/* About founders: photography-led alternating rows on full-width navy */
+.founders-feature{padding:92px 0 96px}
+.founders-feature .founders-feature__head{margin:0 0 56px;padding:0}
+.founder-row{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:0 80px;align-items:center}
+.founder-row--reverse{grid-template-columns:minmax(0,1fr) minmax(0,290px);margin-top:72px;padding-top:72px;border-top:1px solid rgba(238,235,232,.14)}
+.founder-row__photo{margin:0}
+.founder-row__photo img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:3px}
+.founder-row--reverse .founder-row__photo{justify-self:end;width:100%}
+.ed-quote--founder .quote-card__photo{display:none}
+.ed-quote--founder .quote-card__mark{height:30px;font-size:60px;color:#b29a64}
+.ed-quote--founder .quote-card__text{margin-top:16px;font-family:DMSerif,Georgia,serif;font-size:clamp(1.12rem,1.32vw,1.26rem);line-height:1.62;letter-spacing:-.003em;color:#f1eee9;max-width:60ch}
+.ed-quote--founder-lead .quote-card__text{font-size:clamp(1.28rem,1.62vw,1.5rem);line-height:1.55;max-width:34ch}
+.ed-quote--founder .quote-card__foot{justify-content:flex-start;gap:14px 28px;margin-top:30px;padding-top:22px;border-top:1px solid rgba(238,235,232,.16);max-width:60ch}
+.ed-quote--founder .quote-card__name{font-size:16px;color:#fff}
+.ed-quote--founder .quote-card__role{color:rgba(238,235,232,.7)}
+.ed-quote--founder .quote-card__logo{filter:brightness(0) invert(1);opacity:.85;mix-blend-mode:normal}
+@media(max-width:1100px){.founder-row{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:0 56px}.founder-row--reverse{grid-template-columns:minmax(0,1fr) minmax(0,240px)}}
+@media(max-width:760px){.founders-feature{padding:64px 0 68px}.founders-feature .founders-feature__head{margin-bottom:36px}
+.founder-row,.founder-row--reverse{grid-template-columns:1fr;gap:26px 0}
+.founder-row--reverse{margin-top:48px;padding-top:48px}
+.founder-row__photo{width:min(240px,70%)}
+.founder-row--reverse .founder-row__photo{order:-1;justify-self:start;width:min(200px,60%)}
+.ed-quote--founder-lead .quote-card__text{font-size:1.2rem;max-width:none}
+.ed-quote--founder .quote-card__text{font-size:1.08rem}}
+@media(min-width:761px){.ed-quote--founder-lead .quote-card__text{max-width:44ch}.ed-quote--founder-lead .quote-card__foot{max-width:44ch}.founder-row--reverse .founder-row__quote{justify-self:end;max-width:60ch}}
