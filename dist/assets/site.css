@@ -698,3 +698,11 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 /* Deals: bands with two investor logos stack the logos under the names on narrower screens */
 .tombstone__label{white-space:nowrap}
 @media(max-width:1000px){.tombstone__band:has(.tombstone__party-logo+.tombstone__party-logo){flex-direction:column;align-items:flex-start;gap:12px}.tombstone__band:has(.tombstone__party-logo+.tombstone__party-logo) .tombstone__party-logos{justify-content:flex-start;flex-wrap:nowrap;gap:20px}}
+/* Deal cards: description removed, so the value carries the space above the investor divider */
+.deal-card__amount{margin-bottom:30px}
+@media(max-width:760px){.deal-card__amount{margin-bottom:24px}}
+.tombstone__body{justify-content:flex-start}
+.tombstone__logo--named{flex-direction:column;gap:4px}
+.tombstone__logo--named .tombstone__company-logo{height:42px}
+.tombstone__logo--named .tombstone__company{margin:0;font-size:1.15rem;line-height:1.1}
+@media(max-width:700px){.tombstone__logo--named .tombstone__company-logo{height:34px}.tombstone__logo--named .tombstone__company{font-size:1.05rem}}

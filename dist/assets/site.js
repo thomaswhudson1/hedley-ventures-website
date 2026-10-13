@@ -117,10 +117,6 @@ const renderTransactionCard = (deal, index) => {
     card.appendChild(amount);
   }
 
-  const type = document.createElement('p');
-  type.className = 'deal-card__type';
-  type.textContent = deal.description || deal.type;
-  card.appendChild(type);
 
   const meta = [deal.sector, deal.year].filter(Boolean).join(' · ');
   if (meta) {
@@ -322,15 +318,13 @@ document.querySelectorAll('[data-deals]').forEach((grid) => {
     const body = el('div', 'tombstone__body');
     const logoWrap = el('div', 'tombstone__logo');
     logoWrap.appendChild(makeLogo(deal.companyLogo, deal.company, 'tombstone__company-logo'));
+    // A symbol-only logo carries the company name inside the same logo area, so every divider lines up
+    if (deal.showCompanyName) { logoWrap.classList.add('tombstone__logo--named'); logoWrap.appendChild(el('p', 'tombstone__company', deal.company)); }
     body.appendChild(logoWrap);
-    if (deal.showCompanyName) body.appendChild(el('p', 'tombstone__company', deal.company));
     body.appendChild(el('span', 'tombstone__rule'));
-    if (deal.amount) {
-      body.appendChild(el('p', 'tombstone__amount', deal.amount));
-      body.appendChild(el('p', 'tombstone__type', deal.type));
-    } else {
-      body.appendChild(el('p', 'tombstone__amount tombstone__amount--text', deal.type));
-    }
+    // Headline: the disclosed value, or "Acquired" for an acquisition; the type only if neither applies
+    const headline = dealHeadline(deal);
+    body.appendChild(el('p', headline ? 'tombstone__amount' : 'tombstone__amount tombstone__amount--text', headline || deal.type));
     if (deal.description) body.appendChild(el('p', 'tombstone__desc', deal.description));
     const meta = [deal.sector, deal.year].filter(Boolean).join(' · ');
     if (meta) body.appendChild(el('p', 'tombstone__meta', meta));
@@ -429,6 +423,22 @@ document.querySelectorAll('[data-deals]').forEach((grid) => {
   if (deals.length % 2 === 1) items[items.length - 1].card.classList.add('tombstone--centred');
   grid.replaceChildren(...nodes);
   grid.classList.add('is-rendered');
+
+  // Give every tombstone the height of the tallest, so the investor bands line up across all rows
+  const equalise = () => {
+    const cards = items.map((it) => it.card);
+    const bands = cards.map((c) => c.querySelector('.tombstone__band'));
+    cards.forEach((c) => { c.style.minHeight = ''; });
+    bands.forEach((b) => { b.style.minHeight = ''; });
+    const tallestBand = Math.max(...bands.map((b) => b.offsetHeight));
+    bands.forEach((b) => { b.style.minHeight = `${tallestBand}px`; });
+    const tallest = Math.max(...cards.map((c) => c.offsetHeight));
+    cards.forEach((c) => { c.style.minHeight = `${tallest}px`; });
+  };
+  requestAnimationFrame(equalise);
+  window.addEventListener('resize', equalise);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(equalise);
+  grid.querySelectorAll('img').forEach((img) => { if (!img.complete) img.addEventListener('load', equalise, { once: true }); });
 });
 
 // Expand/collapse: <button data-expand aria-controls="id" data-label-open="…" data-label-closed="…">
