@@ -665,3 +665,14 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .ed-quote--founder-lead .quote-card__text{font-size:1.2rem;max-width:none}
 .ed-quote--founder .quote-card__text{font-size:1.08rem}}
 @media(min-width:761px){.ed-quote--founder-lead .quote-card__text{max-width:44ch}.ed-quote--founder-lead .quote-card__foot{max-width:44ch}.founder-row--reverse .founder-row__quote{justify-self:end;max-width:60ch}}
+/* About founders: Brad as a compact second feature with round headshot */
+.founder-row--compact{grid-template-columns:minmax(0,1fr) 180px;gap:0 56px;margin-top:64px;padding-top:56px}
+.founder-row--compact .founder-row__photo img{aspect-ratio:1/1;border-radius:50%}
+.founder-row--compact .founder-row__quote{max-width:62ch}
+@media(max-width:1100px){.founder-row--compact{grid-template-columns:minmax(0,1fr) 150px;gap:0 40px}}
+@media(max-width:760px){.founder-row--compact{grid-template-columns:1fr;gap:22px 0;margin-top:44px;padding-top:44px}.founder-row--compact .founder-row__photo{width:120px}}
+.founder-row--compact{grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:0 80px;align-items:center}
+.founder-row--compact .founder-row__photo{grid-column:1;grid-row:1;justify-self:center;width:200px}
+.founder-row--compact .founder-row__quote{grid-column:2;grid-row:1;justify-self:start;max-width:60ch}
+@media(max-width:1100px){.founder-row--compact{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:0 56px}.founder-row--compact .founder-row__photo{width:170px}}
+@media(max-width:760px){.founder-row--compact{grid-template-columns:1fr;gap:22px 0}.founder-row--compact .founder-row__photo,.founder-row--compact .founder-row__quote{grid-column:1;grid-row:auto}.founder-row--compact .founder-row__photo{justify-self:start;width:120px}}
