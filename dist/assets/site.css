@@ -488,3 +488,19 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .proof-slide__deal span{white-space:normal;font-size:15px}
 .proof-slide__logo{max-width:190px}}
 @media(max-width:1100px){.proof-carousel__arrows{margin-left:-11px}.proof-carousel__dots{margin-right:-7px}}
+/* Experience carousel v2: controls centred beneath the card; deal details always on one row */
+.proof-carousel{grid-template-columns:1fr;gap:24px;padding:40px 48px 24px}
+.proof-carousel__controls{flex-direction:row;justify-content:center;align-items:center;gap:14px;padding-top:0}
+.proof-carousel__arrows{display:contents}
+.proof-carousel__arrow[data-dir="-1"]{order:0}
+.proof-carousel__dots{order:1;margin:0}
+.proof-carousel__arrow[data-dir="1"]{order:2}
+.proof-slide__deal{flex-wrap:nowrap;gap:0 44px}
+.proof-slide__deal>*{flex:0 1 auto;min-width:0}
+.proof-slide__deal span{flex-shrink:0}
+@media(max-width:1100px){.proof-carousel{padding:34px 34px 20px}.proof-carousel__arrows{margin:0}.proof-carousel__dots{margin:0}.proof-slide__deal{gap:0 32px}}
+@media(max-width:760px){.proof-carousel{padding:26px 20px 12px;gap:16px}
+.proof-slide__deal{flex-direction:row;align-items:center;justify-content:flex-start;gap:0 14px;margin-top:22px}
+.proof-slide__deal span{flex-shrink:1;max-width:118px;font-size:13.5px;line-height:1.35;white-space:normal}
+.proof-slide__logo{height:calc(var(--h,32px) * .6);max-width:42%}}
+@media(max-width:760px){.proof-slide__logo{height:calc(var(--h,32px) * .68)}}
