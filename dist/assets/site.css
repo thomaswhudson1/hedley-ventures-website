@@ -445,10 +445,10 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 @keyframes heroRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes heroRiseSmall{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:no-preference){
-.page-home .hero-line--1{animation:heroRise .6s cubic-bezier(.2,.7,.2,1) .15s both}
-.page-home .hero-line--2{animation:heroRise .6s cubic-bezier(.2,.7,.2,1) .27s both}
-.page-home .hero>.wrap>.lead{animation:heroRiseSmall .45s cubic-bezier(.2,.7,.2,1) .45s both}
-.page-home .hero-actions{animation:heroRiseSmall .4s cubic-bezier(.2,.7,.2,1) .65s both}}
-@media(prefers-reduced-motion:no-preference) and (min-width:761px){.page-home .site-header nav{animation:heroFade .3s ease both}}
+.page-home .hero-line--1{animation:heroRise .9s cubic-bezier(.2,.7,.2,1) .2s both}
+.page-home .hero-line--2{animation:heroRise .9s cubic-bezier(.2,.7,.2,1) .4s both}
+.page-home .hero>.wrap>.lead{animation:heroRiseSmall .75s cubic-bezier(.2,.7,.2,1) .7s both}
+.page-home .hero-actions{animation:heroRiseSmall .7s cubic-bezier(.2,.7,.2,1) .95s both}}
+@media(prefers-reduced-motion:no-preference) and (min-width:761px){.page-home .site-header nav{animation:heroFade .5s ease both}}
 @media(prefers-reduced-motion:reduce){.site-header .brand,.page-home .hero .hero-primary,.page-home .hero-secondary,.hero-primary__arrow,.hero-secondary__arrow{transition:none}}
 @media(max-width:760px){.page-home .hero>.wrap>.lead{margin-top:26px}.page-home .hero-actions{flex-direction:column;align-items:flex-start;gap:14px;margin-top:34px}.page-home .hero .hero-primary{min-height:50px}}
