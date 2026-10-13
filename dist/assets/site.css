@@ -504,3 +504,19 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .proof-slide__deal span{flex-shrink:1;max-width:118px;font-size:13.5px;line-height:1.35;white-space:normal}
 .proof-slide__logo{height:calc(var(--h,32px) * .6);max-width:42%}}
 @media(max-width:760px){.proof-slide__logo{height:calc(var(--h,32px) * .68)}}
+/* Network section: standalone navy endorsement banner + investor logos on cream */
+.network-home{padding-top:84px}
+.network-home .network-home__investors .quote-card{padding:28px 32px 24px}
+.network-home .quote-card__text{line-height:1.7}
+.ecosystem-panel{padding:36px 52px 32px}
+.network-logos{margin-top:44px}
+.network-logos__label{font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.network-logos__list{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 32px;margin:22px 0 0;padding:0;list-style:none}
+.network-logos__list img{display:block;width:auto;height:var(--h,30px);max-width:150px;object-fit:contain;opacity:.88}
+.network-logos__note{margin-top:22px;font-size:13px;line-height:1.55;color:var(--muted)}
+@media(max-width:1000px){.network-logos__list{justify-content:flex-start;gap:26px 44px}}
+@media(max-width:760px){.network-home{padding-top:56px}.ecosystem-panel{padding:28px 22px 22px}.network-home .network-home__investors .quote-card{padding:22px 20px 18px}.network-logos{margin-top:34px}
+.network-logos__list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));justify-items:center;gap:26px 20px}
+.network-logos__list img{height:calc(var(--h,30px) * .85);max-width:100%}}
+.network-home .network-home__investors{grid-auto-rows:1fr}
+@media(max-width:1000px){.network-home .network-home__investors{grid-auto-rows:auto}.ecosystem-panel__carousel{grid-template-columns:1fr;gap:22px}.eco-carousel__controls{padding-bottom:0}}
