@@ -721,3 +721,20 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 /* Contact button: tighter box */
 .site-header nav a[href="/contact/"]{padding:5px 12px;border-color:rgba(194,170,119,.45)}
 @media(max-width:760px){.site-header nav a[href="/contact/"]{padding:8px 16px;margin-top:16px}}
+/* About: Brad mirrors Sabrina (quote left, portrait right, same portrait width) */
+.founder-row--balanced{grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:0 80px;align-items:center}
+.founder-row--balanced .founder-row__quote{justify-self:start;max-width:none}
+.founder-row--balanced .founder-row__photo{grid-column:auto;grid-row:auto;justify-self:stretch;width:100%}
+.founder-row--balanced .founder-row__photo img{aspect-ratio:3/4;border-radius:3px}
+.ed-quote--founder-second .quote-card__text{font-size:clamp(1.16rem,1.4vw,1.3rem);line-height:1.6;max-width:50ch}
+.ed-quote--founder-second .quote-card__foot{max-width:50ch}
+@media(max-width:1100px){.founder-row--balanced{grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:0 56px}}
+@media(max-width:760px){.founder-row--balanced{grid-template-columns:1fr;gap:26px 0}.founder-row--balanced .founder-row__photo{order:-1;justify-self:start;width:min(240px,70%)}.ed-quote--founder-second .quote-card__text{font-size:1.1rem}}
+/* About: EISA caption beneath the photograph */
+.eco-spread__photo img{height:auto}
+.eco-spread__figcaption{margin-top:12px;font-size:13.5px;line-height:1.4;letter-spacing:.02em;color:var(--muted)}
+/* About: larger ecosystem headshots */
+.ed-quote--eco-lead .quote-card__photo{width:104px;height:104px}
+.ed-quote--eco-side .quote-card__photo{width:72px;height:72px}
+@media(max-width:760px){.ed-quote--eco-lead .quote-card__photo{width:88px;height:88px}.ed-quote--eco-side .quote-card__photo{width:64px;height:64px}}
+@media(min-width:761px){.founder-row--balanced .founder-row__quote{justify-self:end}}
