@@ -762,3 +762,16 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 @media(max-width:760px){.ed-quote--feature{padding-bottom:0}.ed-investors__support{padding-top:32px}.ed-investors__more{margin-top:32px;padding-top:0}.ed-quote--more .quote-card__foot{margin-top:24px}}
 @media(max-width:1100px){.ed-quote--more+.ed-quote--more{border-top:0;padding-top:0;margin-top:40px}}
 @media(max-width:760px){.ed-quote--support+.ed-quote--support{border-top:0;padding-top:0;margin-top:32px}.ed-quote--more+.ed-quote--more{margin-top:32px}}
+/* About founders: wider composition, larger matched portraits, no divider */
+.founders-feature{padding:88px 0 92px}
+.founders-feature h2 span{color:#98794E}
+.founders-feature .founders-feature__head{margin-bottom:48px}
+.founder-row{grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:0 64px;align-items:center}
+.founder-row--balanced{grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:0 64px;margin-top:64px;padding-top:0;border-top:0}
+.founder-row--balanced .founder-row__quote{justify-self:stretch;max-width:none}
+.ed-quote--founder-lead .quote-card__text,.ed-quote--founder-lead .quote-card__foot{max-width:none}
+.ed-quote--founder-second .quote-card__text,.ed-quote--founder-second .quote-card__foot{max-width:none}
+.ed-quote--founder-lead .quote-card__text{font-size:clamp(1.3rem,1.65vw,1.52rem);line-height:1.55}
+.ed-quote--founder-second .quote-card__text{font-size:clamp(1.18rem,1.48vw,1.36rem);line-height:1.6}
+@media(max-width:1100px){.founder-row{grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:0 48px}.founder-row--balanced{grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:0 48px;margin-top:56px}}
+@media(max-width:760px){.founders-feature{padding:64px 0 68px}.founders-feature .founders-feature__head{margin-bottom:32px}.founder-row,.founder-row--balanced{grid-template-columns:1fr;gap:24px 0}.founder-row--balanced{margin-top:52px}.founder-row__photo,.founder-row--balanced .founder-row__photo{width:min(280px,78%)}.ed-quote--founder-lead .quote-card__text{font-size:1.22rem}.ed-quote--founder-second .quote-card__text{font-size:1.12rem}}
