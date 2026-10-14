@@ -808,3 +808,10 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 @media(max-width:1000px){.tombstone__body{padding:32px 28px 22px}}
 @media(max-width:700px){.deals-intro{padding:40px 0 22px}.deals-portfolio{padding-top:20px}.deals-attribution{margin-bottom:18px;font-size:13.5px}.tombstone__body{padding:30px 22px 20px}.tombstone__logo{height:54px}.tombstone__amount{margin-top:18px}.tombstone__actions{padding:0 22px 20px}}
 @media(min-width:1001px){.tombstone{min-height:340px}}@media(min-width:701px) and (max-width:1000px){.tombstone{min-height:310px}}
+/* Deals: attribution beneath the grid; tighter intro-to-grid spacing */
+.deals-intro{padding-bottom:26px}
+.deals-portfolio{padding-top:12px}
+.deals-note{margin-top:32px;font-size:14px;line-height:1.5;letter-spacing:.01em;color:var(--muted)}
+.tombstone__party-logos{align-items:center}
+.tombstone__party-logo{display:block}
+@media(max-width:700px){.deals-intro{padding-bottom:22px}.deals-portfolio{padding-top:8px}.deals-note{margin-top:26px;font-size:13.5px}}

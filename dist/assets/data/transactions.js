@@ -155,8 +155,8 @@ window.HEDLEY_TRANSACTIONS = [
     amount: '£3m',
     currency: 'GBP',
     counterparties: [
-      { name: 'Symvan', logo: { src: '/assets/proof/symvan.svg', width: 374, height: 58, displayHeight: 19 } },
-      { name: 'Artorius', logo: { src: '/assets/proof/artorius.png', width: 339, height: 66, displayHeight: 21 } }
+      { name: 'Symvan', logo: { src: '/assets/proof/symvan.svg', width: 374, height: 58, displayHeight: 25 } },
+      { name: 'Artorius', logo: { src: '/assets/proof/artorius.png', width: 339, height: 66, displayHeight: 18 } }
     ],
     counterpartyLabel: null,
     year: null,
@@ -220,8 +220,8 @@ window.HEDLEY_TRANSACTIONS = [
     amount: '£2.55m',
     currency: 'GBP',
     counterparties: [
-      { name: 'MEIF', logo: { src: '/assets/proof/meif.png', width: 442, height: 146, displayHeight: 34 } },
-      { name: 'Mercia', logo: { src: '/assets/network/mercia.png', width: 277, height: 103, displayHeight: 32 } }
+      { name: 'MEIF', logo: { src: '/assets/proof/meif.png?v=2', width: 440, height: 128, displayHeight: 30 } },
+      { name: 'Mercia', logo: { src: '/assets/network/mercia.png', width: 277, height: 103, displayHeight: 31 } }
     ],
     counterpartyLabel: null,
     year: null,
