@@ -323,7 +323,6 @@ document.querySelectorAll('[data-deals]').forEach((grid) => {
     // A symbol-only logo carries the company name inside the same logo area, so every divider lines up
     if (deal.showCompanyName) { logoWrap.classList.add('tombstone__logo--named'); logoWrap.appendChild(el('p', 'tombstone__company', deal.company)); }
     body.appendChild(logoWrap);
-    body.appendChild(el('span', 'tombstone__rule'));
     // Headline: the disclosed value, or "Acquired" for an acquisition; the type only if neither applies
     const headline = dealHeadline(deal);
     body.appendChild(el('p', headline ? 'tombstone__amount' : 'tombstone__amount tombstone__amount--text', headline || deal.type));
@@ -426,16 +425,12 @@ document.querySelectorAll('[data-deals]').forEach((grid) => {
   grid.replaceChildren(...nodes);
   grid.classList.add('is-rendered');
 
-  // Give every tombstone the height of the tallest, so the investor bands line up across all rows
+  // Give every investor band the same height so they line up; cards in a row share a height through the grid
   const equalise = () => {
-    const cards = items.map((it) => it.card);
-    const bands = cards.map((c) => c.querySelector('.tombstone__band'));
-    cards.forEach((c) => { c.style.minHeight = ''; });
+    const bands = items.map((it) => it.card.querySelector('.tombstone__band'));
     bands.forEach((b) => { b.style.minHeight = ''; });
     const tallestBand = Math.max(...bands.map((b) => b.offsetHeight));
     bands.forEach((b) => { b.style.minHeight = `${tallestBand}px`; });
-    const tallest = Math.max(...cards.map((c) => c.offsetHeight));
-    cards.forEach((c) => { c.style.minHeight = `${tallest}px`; });
   };
   requestAnimationFrame(equalise);
   window.addEventListener('resize', equalise);

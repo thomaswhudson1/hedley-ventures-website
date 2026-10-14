@@ -796,3 +796,15 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 @media(max-width:980px){.eco-spread__inner{grid-template-columns:1fr}.eco-spread__panel{padding:34px 0 0}}
 @media(max-width:760px){.eco-spread{padding-top:64px}.eco-endorse{padding:44px 0 72px}.eco-endorse__grid.eco-endorse__grid--three{gap:36px}.ed-quote--eco .quote-card__photo{width:68px;height:68px}.eco-spread__copy{font-size:17px}}
 @media(min-width:1001px){.ed-quote--eco .quote-card__foot{min-height:154px;justify-content:flex-start}}
+/* Deals: simpler intro, quiet attribution, compact tombstones */
+.deals-intro{padding:58px 0 30px}
+.deals-intro h1 span{color:#98794E}
+.deals-portfolio{padding-top:28px}
+.deals-attribution{margin:0 0 22px;font-size:14px;line-height:1.5;letter-spacing:.01em;color:var(--muted)}
+.tombstone__body{justify-content:center;padding:38px 40px 26px}
+.tombstone__logo{height:64px}
+.tombstone__amount{margin-top:22px}
+.tombstone__actions{padding:0 32px 24px}
+@media(max-width:1000px){.tombstone__body{padding:32px 28px 22px}}
+@media(max-width:700px){.deals-intro{padding:40px 0 22px}.deals-portfolio{padding-top:20px}.deals-attribution{margin-bottom:18px;font-size:13.5px}.tombstone__body{padding:30px 22px 20px}.tombstone__logo{height:54px}.tombstone__amount{margin-top:18px}.tombstone__actions{padding:0 22px 20px}}
+@media(min-width:1001px){.tombstone{min-height:340px}}@media(min-width:701px) and (max-width:1000px){.tombstone{min-height:310px}}
