@@ -221,7 +221,7 @@ document.querySelectorAll('[data-testimonials]').forEach((container) => {
   const variant = container.getAttribute('data-card-class');
   container.replaceChildren(...list.map((t, i) => {
     const card = el('figure', `quote-card reveal${variant ? ` ${variant}` : ''}`);
-    card.style.setProperty('--reveal-delay', `${start + i * 100}ms`);
+    card.style.setProperty('--reveal-delay', `${start + i * (Number(container.getAttribute('data-stagger')) || 100)}ms`);
     const badge = draftBadge(t, 'quote-card'); if (badge) card.appendChild(badge);
     const mark = el('span', 'quote-card__mark', '“'); mark.setAttribute('aria-hidden', 'true');
     card.appendChild(mark);

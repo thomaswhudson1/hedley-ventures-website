@@ -819,3 +819,20 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .reveal-ready .about-editorial .portrait.reveal:not(.is-visible){transform:translateY(18px)}
 .reveal-ready .about-editorial .bio-copy .reveal:not(.is-visible){transform:translateY(12px)}
 .reputation h2 span{color:#98794E}
+/* About ecosystem: horizontal attributions aligned along the bottom, staggered reveal, subtle hover lift */
+.ed-quote--eco .quote-card__text{margin-bottom:28px}
+.ed-quote--eco .quote-card__foot{flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:14px;min-height:0;margin-top:auto}
+.ed-quote--eco .quote-card__person{flex:1 1 auto;min-width:0;gap:14px}
+.ed-quote--eco .quote-card__photo{width:72px;height:72px;flex-shrink:0}
+.ed-quote--eco .quote-card__who{min-width:0}
+.ed-quote--eco .quote-card__role{font-size:13.5px}
+.ed-quote--eco .quote-card__logo{flex-shrink:0;width:auto;max-width:124px;object-fit:contain}
+.ed-quote--eco .quote-card__logo[alt="Beauhurst"]{height:18px}
+.ed-quote--eco .quote-card__logo[alt="EISA"]{height:42px}
+.ed-quote--eco .quote-card__logo[alt="Shoosmiths"]{height:15px}
+@media(min-width:1001px){.ed-quote--eco .quote-card__foot{min-height:0}}
+.reveal-ready .ed-quote--eco.reveal{transition-duration:.5s}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.ed-quote--eco>*{transition:transform .22s ease}.ed-quote--eco:hover>*{transform:translateY(-3px)}}
+@media(max-width:1000px){.ed-quote--eco .quote-card__foot{margin-top:0}}
+@media(max-width:760px){.ed-quote--eco .quote-card__foot{flex-wrap:wrap;row-gap:12px}.ed-quote--eco .quote-card__photo{width:64px;height:64px}}
+@media(max-width:760px){.ed-quote--eco .quote-card__foot{flex-wrap:nowrap;gap:12px}.ed-quote--eco .quote-card__person{gap:12px}.ed-quote--eco .quote-card__photo{width:56px;height:56px}.ed-quote--eco .quote-card__logo[alt="Beauhurst"]{height:15px}.ed-quote--eco .quote-card__logo[alt="EISA"]{height:36px}.ed-quote--eco .quote-card__logo[alt="Shoosmiths"]{height:13px}}
