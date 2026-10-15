@@ -815,3 +815,6 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .tombstone__party-logos{align-items:center}
 .tombstone__party-logo{display:block}
 @media(max-width:700px){.deals-intro{padding-bottom:22px}.deals-portfolio{padding-top:8px}.deals-note{margin-top:26px;font-size:13.5px}}
+/* About intro: entrance reveal distances (uses the site reveal system; reduced motion shows content at once) */
+.reveal-ready .about-editorial .portrait.reveal:not(.is-visible){transform:translateY(18px)}
+.reveal-ready .about-editorial .bio-copy .reveal:not(.is-visible){transform:translateY(12px)}
