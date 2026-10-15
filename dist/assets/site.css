@@ -876,3 +876,10 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 @media(max-width:1000px){.eco-story__lead{grid-template-columns:1fr}.eco-story__photo img{aspect-ratio:3/2}.eco-story__panel{padding-top:34px;gap:32px}.eco-story__support{margin-top:56px}}
 @media(max-width:760px){.eco-story{padding:64px 0 72px}.eco-story__support{grid-template-columns:1fr;gap:36px;margin-top:40px}}
 .ed-investors__intro h2{max-width:none}
+/* About ecosystem: Christiana featured in the editorial serif, balanced against the photograph */
+.eco-story__lead{align-items:center}
+.eco-story__panel{gap:30px;padding-top:0}
+.ed-quote--eco-feature .quote-card__mark{height:30px;font-size:60px}
+.ed-quote--eco-feature .quote-card__text{margin:-2px 0 30px;font-family:DMSerif,Georgia,serif;font-size:clamp(1.12rem,1.42vw,1.28rem);line-height:1.6;letter-spacing:-.003em;color:var(--navy)}
+@media(max-width:1000px){.eco-story__lead{align-items:start}.eco-story__panel{padding-top:34px;gap:26px}.ed-quote--eco-feature .quote-card__text{font-size:1.2rem}}
+@media(max-width:760px){.ed-quote--eco-feature .quote-card__text{font-size:1.1rem;line-height:1.62}}
