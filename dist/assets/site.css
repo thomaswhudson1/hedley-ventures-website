@@ -818,3 +818,4 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 /* About intro: entrance reveal distances (uses the site reveal system; reduced motion shows content at once) */
 .reveal-ready .about-editorial .portrait.reveal:not(.is-visible){transform:translateY(18px)}
 .reveal-ready .about-editorial .bio-copy .reveal:not(.is-visible){transform:translateY(12px)}
+.reputation h2 span{color:#98794E}
