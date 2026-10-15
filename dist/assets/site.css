@@ -883,3 +883,20 @@ body{font-size:16px;line-height:1.55}.section{padding:68px 0}.wrap{width:min(128
 .ed-quote--eco-feature .quote-card__text{margin:-2px 0 30px;font-family:DMSerif,Georgia,serif;font-size:clamp(1.12rem,1.42vw,1.28rem);line-height:1.6;letter-spacing:-.003em;color:var(--navy)}
 @media(max-width:1000px){.eco-story__lead{align-items:start}.eco-story__panel{padding-top:34px;gap:26px}.ed-quote--eco-feature .quote-card__text{font-size:1.2rem}}
 @media(max-width:760px){.ed-quote--eco-feature .quote-card__text{font-size:1.1rem;line-height:1.62}}
+/* Footer: discreet legal line */
+.footer-legal{margin-top:14px}
+.footer-legal p{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin:0;font-size:12px;line-height:1.6;letter-spacing:.01em;color:rgba(199,207,209,.62)}
+.footer-legal__sep{color:rgba(199,207,209,.32)}
+.footer-legal a{color:inherit;text-decoration:underline;text-decoration-color:rgba(199,207,209,.35);text-underline-offset:3px;transition:color .2s ease}
+.footer-legal a:hover{color:#d4c397}
+@media(max-width:760px){.footer-legal{margin-top:18px}.footer-legal p{flex-direction:column;align-items:flex-start;gap:2px}.footer-legal__sep{display:none}}
+/* Privacy Policy page */
+.privacy{padding:40px 0 96px}
+.legal-copy{max-width:760px}
+.legal-copy__updated{font-size:14px;color:var(--muted)}
+.legal-copy h2{margin:40px 0 12px;font-size:1.45rem;line-height:1.25;letter-spacing:-.01em;color:var(--navy)}
+.legal-copy p{margin-top:12px;font-size:16.5px;line-height:1.7;color:var(--muted)}
+.legal-copy a{color:var(--navy);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
+.legal-copy a:hover{color:var(--gold-dark)}
+@media(max-width:760px){.privacy{padding:28px 0 64px}.legal-copy h2{margin-top:32px;font-size:1.3rem}.legal-copy p{font-size:16px}}
+.wrap.legal-copy{max-width:none}.legal-copy>*{max-width:760px}
