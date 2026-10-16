@@ -185,7 +185,7 @@
 
     const emailLink = el('a', { href: `mailto:${r.email}`, text: r.email });
     const rows = [
-      ['Contact name', r.name], ['Email address', emailLink], ['Company', r.company], ['How can I help?', r.service],
+      ['Contact name', r.name], ['Email address', emailLink], ['Company', r.company], ['Services required', r.service],
       ...(r.raise_amount || r.raise_timing || ['Fundraising Advisory', 'Both'].includes(r.service)
         ? [['Fundraising amount', r.raise_amount || 'Not answered'], ['Fundraising timing', r.raise_timing || 'Not answered']] : []),
       ['Monthly revenue run-rate', r.traction], ['Anything else', r.message || '—'],

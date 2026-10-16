@@ -64,7 +64,7 @@ function validateUpdate(body) {
 
 const CSV_COLUMNS = [
   ['Reference', 'ref'], ['Date received (UTC)', 'received_at'], ['Company', 'company'], ['Contact name', 'name'], ['Email', 'email'],
-  ['Service required', 'service'], ['Fundraising amount', 'raise_amount'], ['Fundraising timing', 'raise_timing'], ['Monthly revenue run-rate', 'traction'],
+  ['Services required', 'service'], ['Fundraising amount', 'raise_amount'], ['Fundraising timing', 'raise_timing'], ['Monthly revenue run-rate', 'traction'],
   ['Additional information', 'message'], ['Status', 'status'], ['Priority', 'priority'], ['Last contacted', 'last_contacted'],
   ['Next follow-up', 'next_follow_up'], ['Internal notes', 'notes'], ['Archived', 'archived_at'], ['Email notification', 'notification_status']
 ];

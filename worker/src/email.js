@@ -15,7 +15,7 @@ export function buildNotification(enquiry, link) {
     ['Contact name', enquiry.name],
     ['Email address', enquiry.email],
     ['Company', enquiry.company],
-    ['Service required', enquiry.service],
+    ['Services required', enquiry.service],
     ...(enquiry.raise_amount ? [['Fundraising amount', enquiry.raise_amount]] : []),
     ...(enquiry.raise_timing ? [['Fundraising timing', enquiry.raise_timing]] : []),
     ['Monthly revenue run-rate', enquiry.traction],
