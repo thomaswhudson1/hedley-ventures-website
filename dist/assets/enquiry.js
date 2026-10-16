@@ -39,7 +39,7 @@
     name: 'Please enter your name.',
     email: 'Please enter a valid email address.',
     company: 'Please enter your company name.',
-    service: 'Please choose how Thomas can help.',
+    service: 'Please choose the services required.',
     traction: 'Please choose your current level of traction.'
   };
 
