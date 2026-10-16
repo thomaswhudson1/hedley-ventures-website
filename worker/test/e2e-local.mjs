@@ -91,8 +91,24 @@ await check('Fundraising answers are discarded for non-fundraising services', as
   assert.equal(row.raise_amount, null);
   assert.equal(row.raise_timing, null);
 });
-await check('Optional fields can be left blank', async () => {
-  const r = await submit({ service: 'Both', raiseAmount: '', raiseTiming: '', message: '', company: 'Blank Optional Ltd' });
+await check('Fundraising amount and timing are required for Fundraising Advisory and Both', async () => {
+  for (const service of ['Fundraising Advisory', 'Both']) {
+    const r = await submit({ service, raiseAmount: '', raiseTiming: '', company: `Missing Raise ${service}` });
+    assert.equal(r.status, 400, service);
+    assert.ok(r.data.errors.raiseAmount && r.data.errors.raiseTiming, service);
+    const partial = await submit({ service, raiseAmount: 'Not yet decided', raiseTiming: '', company: `Partial Raise ${service}` });
+    assert.equal(partial.status, 400);
+    assert.ok(!partial.data.errors.raiseAmount && partial.data.errors.raiseTiming);
+  }
+});
+await check('Fundraising questions not required for CFO Support / Something else; message optional', async () => {
+  for (const service of ['Fractional CFO Support', 'Something else']) {
+    const r = await submit({ service, raiseAmount: '', raiseTiming: '', message: '', company: `No Raise ${service}` });
+    assert.equal(r.status, 201, service);
+  }
+});
+await check('"Not yet decided" and "In 6+ months / Just exploring" are accepted', async () => {
+  const r = await submit({ service: 'Both', raiseAmount: 'Not yet decided', raiseTiming: 'In 6+ months / Just exploring', company: 'Undecided Ltd' });
   assert.equal(r.status, 201);
 });
 await check('Missing security-check token is refused and nothing stored', async () => {

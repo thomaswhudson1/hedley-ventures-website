@@ -31,10 +31,10 @@ export function validateEnquiry(body) {
   if (!SERVICES.includes(service)) errors.service = 'Please choose how Thomas can help.';
   if (!TRACTION.includes(traction)) errors.traction = 'Please choose your current level of traction.';
 
-  // Fundraising questions only apply to fundraising enquiries; they are optional and ignored otherwise.
+  // Fundraising questions are required for fundraising enquiries and ignored otherwise.
   if (FUNDRAISING_SERVICES.includes(service)) {
-    if (raiseAmount && !RAISE_AMOUNTS.includes(raiseAmount)) errors.raiseAmount = 'Please choose a valid option.';
-    if (raiseTiming && !RAISE_TIMINGS.includes(raiseTiming)) errors.raiseTiming = 'Please choose a valid option.';
+    if (!RAISE_AMOUNTS.includes(raiseAmount)) errors.raiseAmount = 'Please choose how much you are looking to raise.';
+    if (!RAISE_TIMINGS.includes(raiseTiming)) errors.raiseTiming = 'Please choose when you are looking to raise funding.';
   } else {
     raiseAmount = '';
     raiseTiming = '';

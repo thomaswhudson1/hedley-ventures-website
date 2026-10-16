@@ -28,8 +28,16 @@
 
   // ----- Conditional fundraising questions -----
   const selectedService = () => (form.querySelector('input[name="service"]:checked') || {}).value || '';
+  const RAISE_FIELDS = ['raiseAmount', 'raiseTiming'];
+  const isFundraising = () => FUNDRAISING.includes(selectedService());
+  // The fundraising questions are required only while they are shown.
   function updateRaiseFields() {
-    raiseFields.hidden = !FUNDRAISING.includes(selectedService());
+    const show = isFundraising();
+    raiseFields.hidden = !show;
+    RAISE_FIELDS.forEach((n) => {
+      form.elements[n].required = show;
+      if (!show) clearError(n);
+    });
   }
   form.querySelectorAll('input[name="service"]').forEach((r) => r.addEventListener('change', () => { updateRaiseFields(); clearError('service'); }));
   updateRaiseFields();
@@ -40,7 +48,9 @@
     email: 'Please enter a valid email address.',
     company: 'Please enter your company name.',
     service: 'Please choose the services required.',
-    traction: 'Please choose your current level of traction.'
+    traction: 'Please choose your current level of traction.',
+    raiseAmount: 'Please choose how much you are looking to raise.',
+    raiseTiming: 'Please choose when you are looking to raise funding.'
   };
 
   function setError(name, message) {
@@ -56,7 +66,7 @@
     if (field && field.removeAttribute) field.removeAttribute('aria-invalid');
   }
   ['name', 'email', 'company', 'traction', 'message'].forEach((n) => form.elements[n].addEventListener('input', () => clearError(n)));
-  form.elements.traction.addEventListener('change', () => clearError('traction'));
+  ['traction', ...RAISE_FIELDS].forEach((n) => form.elements[n].addEventListener('change', () => clearError(n)));
 
   // Show "Please select" in the muted placeholder colour until an option is chosen.
   form.querySelectorAll('select').forEach((select) => {
@@ -73,6 +83,11 @@
       if (!input.value || !input.checkValidity()) { setError(name, MESSAGES[name]); invalid.push(input); } else clearError(name);
     }
     if (!selectedService()) { setError('service', MESSAGES.service); invalid.push(form.querySelector('input[name="service"]')); } else clearError('service');
+    if (isFundraising()) {
+      for (const name of RAISE_FIELDS) {
+        if (!form.elements[name].value) { setError(name, MESSAGES[name]); invalid.push(form.elements[name]); } else clearError(name);
+      }
+    }
     invalid.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
     if (invalid.length) invalid[0].focus();
     return invalid.length === 0;
