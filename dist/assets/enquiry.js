@@ -137,7 +137,7 @@
 
   function showDone(ref) {
     const first = form.elements.name.value.trim().split(/\s+/)[0];
-    form.querySelector('#enquiry-done-text').textContent = `Thank you${first ? ', ' + first : ''}. We will review your enquiry and be in touch shortly.`;
+    form.querySelector('#enquiry-done-text').textContent = `Thank you${first ? ' ' + first : ''}. We will review your enquiry and be in touch shortly.`;
     const refEl = form.querySelector('#enquiry-ref');
     if (ref) { refEl.textContent = `Reference: ${ref}`; refEl.hidden = false; }
     body.hidden = true;
