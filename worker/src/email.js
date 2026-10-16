@@ -20,6 +20,8 @@ export function buildNotification(enquiry, link) {
     ...(enquiry.raise_timing ? [['Fundraising timing', enquiry.raise_timing]] : []),
     ['Monthly revenue run-rate', enquiry.traction],
     ['Additional information', enquiry.message || '—'],
+    ['Source', [enquiry.source_channel || 'Direct / unknown', enquiry.referrer_host, enquiry.utm_campaign && `campaign: ${enquiry.utm_campaign}`].filter(Boolean).join(' · ')],
+    ...(enquiry.landing_page ? [['First page visited', enquiry.landing_page]] : []),
     ['Date received', formatLondon(enquiry.received_at)],
     ['Reference', enquiry.ref]
   ];

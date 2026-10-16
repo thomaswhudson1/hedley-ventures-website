@@ -4,17 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
-<title>Enquiries | Hedley Ventures</title>
-<link rel="stylesheet" href="/admin/assets/admin.css?v=3">
-<script defer src="/admin/assets/admin.js?v=3"></script>
+<title>Dashboard | Hedley Ventures</title>
+<link rel="stylesheet" href="/admin/assets/admin.css?v=4">
+<script defer src="/admin/assets/admin.js?v=4"></script>
 </head>
 <body>
 <header class="topbar">
   <div class="topbar__inner">
-    <a class="brand" href="/admin/enquiries"><span class="brand__name">Hedley Ventures</span><span class="brand__section">Enquiries</span></a>
+    <a class="brand" href="/admin/overview"><span class="brand__name">Hedley Ventures</span><span class="brand__section">Dashboard</span></a>
+    <nav class="tabs" aria-label="Dashboard sections">
+      <a class="tab" href="/admin/overview" data-view="overview">Overview</a>
+      <a class="tab" href="/admin/enquiries" data-view="enquiries">Enquiries</a>
+      <a class="tab" href="/admin/website" data-view="website">Website</a>
+    </nav>
     <div class="topbar__actions">
       <span class="topbar__user" id="user-email"></span>
-      <a class="btn btn--ghost" id="export-link" href="/admin/api/export.csv">Export CSV</a>
       <a class="btn btn--ghost" id="logout-link" href="/cdn-cgi/access/logout">Log out</a>
     </div>
   </div>
@@ -23,45 +27,124 @@
 <main class="page">
   <div class="banner" id="banner" role="alert" hidden></div>
 
-  <section class="stats" aria-label="Overview">
-    <button class="stat" type="button" data-stat="total"><span class="stat__label">Total enquiries</span><span class="stat__value" id="stat-total">–</span></button>
-    <button class="stat" type="button" data-stat="new"><span class="stat__label">New enquiries</span><span class="stat__value" id="stat-new">–</span></button>
-    <button class="stat" type="button" data-stat="active"><span class="stat__label">Active opportunities</span><span class="stat__value" id="stat-active">–</span></button>
-    <button class="stat stat--alert" type="button" data-stat="followup"><span class="stat__label">Follow-ups due</span><span class="stat__value" id="stat-followup">–</span></button>
+  <!-- ===================== Overview ===================== -->
+  <section class="view" id="view-overview" aria-labelledby="ov-title" hidden>
+    <h1 class="view__title" id="ov-title">Overview</h1>
+
+    <h2 class="block-title">Pipeline</h2>
+    <div class="stats stats--4">
+      <a class="stat" href="/admin/enquiries?status=__active"><span class="stat__label">Active opportunities</span><span class="stat__value" id="ov-active">–</span><span class="stat__sub">Contacted, meeting or proposal</span></a>
+      <a class="stat" href="/admin/enquiries?status=__active"><span class="stat__label">Estimated pipeline fees</span><span class="stat__value" id="ov-pipeline">–</span><span class="stat__sub" id="ov-pipeline-sub">Active opportunities with a fee entered</span></a>
+      <a class="stat" href="/admin/enquiries?status=Proposal+sent"><span class="stat__label">Proposals sent</span><span class="stat__value" id="ov-proposals">–</span><span class="stat__sub" id="ov-proposals-sub"></span></a>
+      <a class="stat" href="/admin/enquiries?status=Won&amp;view=all"><span class="stat__label">Mandates won</span><span class="stat__value" id="ov-won">–</span><span class="stat__sub" id="ov-won-sub"></span></a>
+    </div>
+
+    <div class="ov-grid">
+      <section class="panel" aria-labelledby="ov-fu-title">
+        <div class="panel__head"><h2 class="block-title" id="ov-fu-title">Follow-ups</h2><a class="panel__link" href="/admin/enquiries?followup=7">View all</a></div>
+        <ul class="list" id="ov-followups"></ul>
+      </section>
+      <section class="panel" aria-labelledby="ov-web-title">
+        <div class="panel__head"><h2 class="block-title" id="ov-web-title">Website, last 30 days</h2><a class="panel__link" href="/admin/website">Details</a></div>
+        <div class="mini-stats" id="ov-web"></div>
+      </section>
+    </div>
+
+    <section class="panel" aria-labelledby="ov-recent-title">
+      <div class="panel__head"><h2 class="block-title" id="ov-recent-title">Latest enquiries</h2><a class="panel__link" href="/admin/enquiries">All enquiries</a></div>
+      <ul class="list" id="ov-recent"></ul>
+    </section>
   </section>
 
-  <section class="toolbar" aria-label="Search and filters">
-    <label class="field field--search"><span>Search</span><input id="f-q" type="search" placeholder="Company or contact name" autocomplete="off"></label>
-    <label class="field"><span>Status</span><select id="f-status"><option value="">All statuses</option></select></label>
-    <label class="field"><span>Service</span><select id="f-service"><option value="">All services</option></select></label>
-    <label class="field"><span>Fundraising amount</span><select id="f-amount"><option value="">Any amount</option></select></label>
-    <label class="field"><span>Fundraising timing</span><select id="f-timing"><option value="">Any timing</option></select></label>
-    <label class="field"><span>Show</span><select id="f-view"><option value="active">Current enquiries</option><option value="archived">Archived</option><option value="all">All</option></select></label>
-    <label class="check"><input id="f-followup" type="checkbox"> Follow-ups due only</label>
-    <button class="btn btn--link" id="clear-filters" type="button">Clear filters</button>
+  <!-- ===================== Enquiries ===================== -->
+  <section class="view" id="view-enquiries" aria-labelledby="enq-title" hidden>
+    <div class="view__head">
+      <h1 class="view__title" id="enq-title">Enquiries</h1>
+      <a class="btn btn--ghost" id="export-link" href="/admin/api/export.csv">Export CSV</a>
+    </div>
+
+    <section class="stats" aria-label="Enquiry summary">
+      <button class="stat" type="button" data-stat="total"><span class="stat__label">Total enquiries</span><span class="stat__value" id="stat-total">–</span></button>
+      <button class="stat" type="button" data-stat="new"><span class="stat__label">New enquiries</span><span class="stat__value" id="stat-new">–</span></button>
+      <button class="stat" type="button" data-stat="active"><span class="stat__label">Active opportunities</span><span class="stat__value" id="stat-active">–</span></button>
+      <button class="stat stat--alert" type="button" data-stat="followup"><span class="stat__label">Follow-ups due</span><span class="stat__value" id="stat-followup">–</span></button>
+    </section>
+
+    <section class="toolbar" aria-label="Search and filters">
+      <label class="field field--search"><span>Search</span><input id="f-q" type="search" placeholder="Company or contact name" autocomplete="off"></label>
+      <label class="field"><span>Status</span><select id="f-status"><option value="">All statuses</option></select></label>
+      <label class="field"><span>Service</span><select id="f-service"><option value="">All services</option></select></label>
+      <label class="field"><span>Fundraising amount</span><select id="f-amount"><option value="">Any amount</option></select></label>
+      <label class="field"><span>Fundraising timing</span><select id="f-timing"><option value="">Any timing</option></select></label>
+      <label class="field"><span>Source</span><select id="f-source"><option value="">All sources</option></select></label>
+      <label class="field"><span>Follow-up</span><select id="f-followup"><option value="">Any</option><option value="1">Due today or overdue</option><option value="7">Due within 7 days</option></select></label>
+      <label class="field"><span>Show</span><select id="f-view"><option value="active">Current enquiries</option><option value="archived">Archived</option><option value="all">All</option></select></label>
+      <button class="btn btn--link" id="clear-filters" type="button">Clear filters</button>
+    </section>
+
+    <p class="result-count" id="result-count" aria-live="polite"></p>
+
+    <div class="table-wrap">
+      <table class="table" id="table">
+        <thead>
+          <tr>
+            <th scope="col"><button type="button" data-sort="received_at">Date received</button></th>
+            <th scope="col"><button type="button" data-sort="company">Company</button></th>
+            <th scope="col"><button type="button" data-sort="name">Contact name</button></th>
+            <th scope="col"><button type="button" data-sort="service">Services required</button></th>
+            <th scope="col"><button type="button" data-sort="raise_amount">Fundraising amount</button></th>
+            <th scope="col"><button type="button" data-sort="traction">Monthly revenue run-rate</button></th>
+            <th scope="col"><button type="button" data-sort="raise_timing">Fundraising timing</button></th>
+            <th scope="col"><button type="button" data-sort="estimated_fee">Est. fee</button></th>
+            <th scope="col"><button type="button" data-sort="status">Status</button></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p class="empty" id="empty" hidden>No enquiries match these filters.</p>
+      <p class="empty" id="loading">Loading enquiries…</p>
+    </div>
   </section>
 
-  <p class="result-count" id="result-count" aria-live="polite"></p>
+  <!-- ===================== Website ===================== -->
+  <section class="view" id="view-website" aria-labelledby="web-title" hidden>
+    <div class="view__head">
+      <h1 class="view__title" id="web-title">Website</h1>
+      <div class="segmented" role="group" aria-label="Period">
+        <button type="button" data-days="7">7 days</button>
+        <button type="button" data-days="30" aria-pressed="true">30 days</button>
+        <button type="button" data-days="90">90 days</button>
+      </div>
+    </div>
+    <p class="web-status" id="web-status"></p>
 
-  <div class="table-wrap">
-    <table class="table" id="table">
-      <thead>
-        <tr>
-          <th scope="col"><button type="button" data-sort="received_at">Date received</button></th>
-          <th scope="col"><button type="button" data-sort="company">Company</button></th>
-          <th scope="col"><button type="button" data-sort="name">Contact name</button></th>
-          <th scope="col"><button type="button" data-sort="service">Services required</button></th>
-          <th scope="col"><button type="button" data-sort="raise_amount">Fundraising amount</button></th>
-          <th scope="col"><button type="button" data-sort="traction">Monthly revenue run-rate</button></th>
-          <th scope="col"><button type="button" data-sort="raise_timing">Fundraising timing</button></th>
-          <th scope="col"><button type="button" data-sort="status">Status</button></th>
-        </tr>
-      </thead>
-      <tbody id="rows"></tbody>
-    </table>
-    <p class="empty" id="empty" hidden>No enquiries match these filters.</p>
-    <p class="empty" id="loading">Loading enquiries…</p>
-  </div>
+    <div class="stats stats--4" id="web-cards"></div>
+
+    <section class="panel" aria-labelledby="web-chart-title">
+      <div class="panel__head"><h2 class="block-title" id="web-chart-title">Visits per day</h2></div>
+      <div class="chart" id="web-chart"></div>
+    </section>
+
+    <div class="ov-grid">
+      <section class="panel" aria-labelledby="web-pages-title">
+        <div class="panel__head"><h2 class="block-title" id="web-pages-title">Most visited pages</h2></div>
+        <table class="mini-table" id="web-pages"></table>
+      </section>
+      <section class="panel" aria-labelledby="web-src-title">
+        <div class="panel__head"><h2 class="block-title" id="web-src-title">Where visits came from</h2></div>
+        <table class="mini-table" id="web-channels"></table>
+        <h3 class="mini-title">Referring websites</h3>
+        <table class="mini-table" id="web-refs"></table>
+      </section>
+    </div>
+
+    <section class="panel" aria-labelledby="web-enq-title">
+      <div class="panel__head"><h2 class="block-title" id="web-enq-title">Enquiries by source</h2></div>
+      <table class="mini-table" id="web-enq"></table>
+    </section>
+
+    <p class="footnote">Figures come from Cloudflare Web Analytics, which counts <strong>visits</strong> (sessions) rather than unique people, uses no cookies and excludes known bots. Visitors using ad blockers may not be counted. Visits from the LinkedIn app often show as “Direct / unknown”; use tagged links (e.g. <code>?utm_source=linkedin</code>) to attribute them. Updated hourly; days are UTC.</p>
+  </section>
 </main>
 
 <div class="drawer" id="drawer" hidden>
@@ -82,6 +165,9 @@
       <h2 class="section-title">Submitted information</h2>
       <dl class="details" id="d-details"></dl>
 
+      <h2 class="section-title">Source</h2>
+      <dl class="details" id="d-source"></dl>
+
       <div class="notify" id="d-notify"></div>
 
       <h2 class="section-title">Your notes and follow-up</h2>
@@ -91,6 +177,7 @@
           <label class="field"><span>Priority</span><select name="priority" id="d-priority"></select></label>
           <label class="field"><span>Last contacted</span><input type="date" name="last_contacted" id="d-last"></label>
           <label class="field"><span>Next follow-up</span><input type="date" name="next_follow_up" id="d-next"></label>
+          <label class="field"><span>Estimated fee (£, optional)</span><input type="text" inputmode="numeric" name="estimated_fee" id="d-fee" placeholder="e.g. 75000" autocomplete="off"></label>
         </div>
         <label class="field"><span>Internal notes</span><textarea name="notes" id="d-notes" rows="7" maxlength="10000"></textarea></label>
         <div class="edit__actions">

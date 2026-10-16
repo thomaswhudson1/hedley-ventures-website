@@ -2,6 +2,7 @@
 // store it, and trigger the email notification. It has no way to read enquiries back out.
 import { validateEnquiry } from './validate.js';
 import { sendNotification } from './email.js';
+import { readSource } from './source.js';
 import { json, makeRef, nowIso, sha256Hex, splitList } from './util.js';
 
 const MAX_BODY_BYTES = 16 * 1024;
@@ -81,11 +82,14 @@ async function handleSubmit(request, env, ctx, cors) {
   const id = crypto.randomUUID();
   const ref = makeRef();
   const receivedAt = nowIso();
+  const source = readSource(body.source);
   try {
     await env.DB.batch([
-      env.DB.prepare(`INSERT INTO enquiries (id, ref, received_at, name, email, company, service, raise_amount, raise_timing, traction, message, submission_key, fingerprint)
-                      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)`)
-        .bind(id, ref, receivedAt, data.name, data.email, data.company, data.service, data.raiseAmount, data.raiseTiming, data.traction, data.message, data.submissionKey, fingerprint),
+      env.DB.prepare(`INSERT INTO enquiries (id, ref, received_at, name, email, company, service, raise_amount, raise_timing, traction, message, submission_key, fingerprint,
+                                             source_channel, referrer_host, landing_page, utm_source, utm_medium, utm_campaign)
+                      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19)`)
+        .bind(id, ref, receivedAt, data.name, data.email, data.company, data.service, data.raiseAmount, data.raiseTiming, data.traction, data.message, data.submissionKey, fingerprint,
+          source.channel, source.referrer, source.landing, source.utmSource, source.utmMedium, source.utmCampaign),
       env.DB.prepare(`INSERT INTO enquiry_admin (enquiry_id, updated_at) VALUES (?1, ?2)`).bind(id, receivedAt),
       env.DB.prepare(`INSERT INTO notifications (enquiry_id) VALUES (?1)`).bind(id)
     ]);

@@ -128,6 +128,18 @@
     if (window.turnstile && widgetId !== null) window.turnstile.reset(widgetId);
   }
 
+  // How this visit arrived (stored for this tab by /assets/attribution.js); falls back to this page alone.
+  function visitSource() {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem('hv_visit_source') || 'null');
+      if (saved && typeof saved === 'object') return saved;
+    } catch { /* ignore */ }
+    let referrer = '';
+    try { const ref = new URL(document.referrer); if (ref.hostname !== location.hostname) referrer = ref.hostname; } catch { /* none */ }
+    const params = new URLSearchParams(location.search);
+    return { landing: location.pathname, referrer, utmSource: params.get('utm_source') || '', utmMedium: params.get('utm_medium') || '', utmCampaign: params.get('utm_campaign') || '' };
+  }
+
   // ----- Submission -----
   function setBusy(busy, label) {
     submit.disabled = busy;
@@ -169,7 +181,8 @@
       raiseAmount: fundraising ? form.elements.raiseAmount.value : '',
       raiseTiming: fundraising ? form.elements.raiseTiming.value : '',
       traction: form.elements.traction.value, message: form.elements.message.value,
-      website: form.elements.website.value, submissionKey, elapsedMs: Date.now() - loadedAt, turnstileToken: token
+      website: form.elements.website.value, submissionKey, elapsedMs: Date.now() - loadedAt, turnstileToken: token,
+      source: visitSource()
     };
 
     let res; let data = {};

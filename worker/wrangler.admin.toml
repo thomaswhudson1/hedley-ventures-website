@@ -26,6 +26,8 @@ migrations_dir = "migrations"
 crons = ["*/15 * * * *"]   # retry failed email notifications; tidy rate-limit records
 
 [vars]
+CF_ACCOUNT_ID = "df12f945182ab5015694feaed7db925b"     # for Web Analytics (read with the CF_ANALYTICS_TOKEN secret)
+CF_WA_SITE_TAG = "b71fbf93784b4c8ab78a693e36357b76"    # Web Analytics site: hedleyventures.com
 ACCESS_TEAM_DOMAIN = "cold-wave-71f8.cloudflareaccess.com"
 ACCESS_AUD = "cb127a3f079e0c72f5a7ba0f4005e9d70097b0e26d034bfed512e00349d0fadd"
 EMAIL_FROM = "Hedley Ventures Website <enquiries@notify.hedleyventures.com>"
@@ -35,3 +37,4 @@ ADMIN_BASE_URL = "https://hedley-enquiries-admin.hedley-enquiries.workers.dev"
 #   ADMIN_EMAIL        Email address allowed into the dashboard
 #   RESEND_API_KEY     Resend API key (for notification retries)
 #   NOTIFY_TO          Address that receives new-enquiry notifications
+#   CF_ANALYTICS_TOKEN Cloudflare API token, Account Analytics: Read only (website figures)

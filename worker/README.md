@@ -9,11 +9,22 @@ Two Cloudflare Workers sharing one D1 database (`hedley-enquiries`, Western Euro
 
 `https://hedleyventures.com/admin/enquiries/` simply forwards to the dashboard.
 
+## Dashboard sections
+- **Overview**: pipeline (active opportunities, estimated fees, proposals, won), follow-ups due in the next 7 days, website last 30 days, latest enquiries.
+- **Enquiries**: the table, filters (incl. source and follow-up), detail view with source and an optional estimated fee, CSV export.
+- **Website**: visits, page views, enquiries and enquiries per 100 visits (7/30/90 days vs previous period), daily chart, top pages, referring sites, enquiries by source.
+
+## Website analytics and enquiry source
+- Every public page loads Cloudflare Web Analytics (cookieless beacon, site tag in `wrangler.admin.toml`) and `/assets/attribution.js`.
+- `attribution.js` keeps the visit's landing page, referring host and UTM tags in `sessionStorage` (this tab only); the Contact form sends them with the enquiry and `src/source.js` turns them into a channel.
+- The admin Worker's cron copies Web Analytics figures (GraphQL API, `CF_ANALYTICS_TOKEN` = Account Analytics: Read) into `analytics_daily` / `analytics_breakdown` at most hourly; first run backfills 90 days. Only hedleyventures.com hosts are counted (local previews are ignored).
+- Tag links you share so the source is reliable, e.g. `https://hedleyventures.com/?utm_source=linkedin&utm_medium=social&utm_campaign=oct-post`.
+
 ## Settings
 - Plain settings live in `wrangler.intake.toml` / `wrangler.admin.toml` (`[vars]`).
 - Secrets are stored in Cloudflare only (Workers → service → Settings → Variables and secrets), never in this repo:
   - intake: `TURNSTILE_SECRET`, `RESEND_API_KEY`, `NOTIFY_TO`
-  - admin: `RESEND_API_KEY`, `NOTIFY_TO`, `ADMIN_EMAIL`
+  - admin: `RESEND_API_KEY`, `NOTIFY_TO`, `ADMIN_EMAIL`, `CF_ANALYTICS_TOKEN`
 - Turnstile site key (public) is in `dist/contact/index.html` (`data-sitekey`).
 - Email is sent from `enquiries@notify.hedleyventures.com` (Resend domain `notify.hedleyventures.com`, DNS records in Squarespace).
 

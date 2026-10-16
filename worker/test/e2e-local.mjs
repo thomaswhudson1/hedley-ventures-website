@@ -184,7 +184,7 @@ await check('Admin pages send security headers and noindex', async () => {
   assert.equal(r.headers.get('cache-control'), 'no-store');
   const deep = await adminGet(`/admin/enquiries/${id}`);
   assert.equal(deep.status, 200);
-  assert.ok(String(deep.data).includes('<title>Enquiries | Hedley Ventures</title>'));
+  assert.ok(String(deep.data).includes('<title>Dashboard | Hedley Ventures</title>'));
 });
 await check('Update without the dashboard header is blocked (CSRF)', async () => {
   const r = await adminWrite(`/admin/api/enquiries/${id}`, 'PATCH', { status: 'Won' }, {});
@@ -230,6 +230,53 @@ await check('CSV export: filters, headers and formula-injection guard', async ()
   assert.equal(filtered.trim().split('\r\n').length, 2, 'header + 1 row');
   const due = await (await fetch(`${ADMIN}/admin/api/export.csv?view=active&followup=1`)).text();
   assert.ok(due.includes(`Northwind Analytics ${RUN}`));
+});
+await check('Enquiry source is recorded with the enquiry', async () => {
+  const r = await submit({ company: `Sourced ${RUN}`, source: { landing: '/services/', referrer: 'www.linkedin.com', utmSource: '', utmMedium: '', utmCampaign: '' } });
+  assert.equal(r.status, 201);
+  await sleep(1500);   // let the local email step finish (two local processes share one database file)
+  const row = await findRow(r.data.ref);
+  assert.equal(row.source_channel, 'LinkedIn');
+  assert.equal(row.referrer_host, 'www.linkedin.com');
+  assert.equal(row.landing_page, '/services/');
+  const tagged = await submit({ company: `Tagged ${RUN}`, source: { landing: '/', referrer: '', utmSource: 'newsletter', utmMedium: 'email', utmCampaign: 'q4' } });
+  await sleep(1500);
+  const row2 = await findRow(tagged.data.ref);
+  assert.equal(row2.source_channel, 'Email');
+  assert.equal(row2.utm_campaign, 'q4');
+  const none = await submit({ company: `NoSource ${RUN}` });
+  await sleep(1500);
+  assert.equal((await findRow(none.data.ref)).source_channel, 'Direct / unknown');
+});
+await check('Estimated fee saves, clears and rejects nonsense', async () => {
+  let r = await adminWrite(`/admin/api/enquiries/${id}`, 'PATCH', { estimated_fee: '£75,000' });
+  assert.equal(r.status, 200, JSON.stringify(r.data));
+  assert.equal(r.data.enquiry.estimated_fee, 75000);
+  for (const bad of ['lots', '-5', '1.5', '999999999999']) assert.equal((await adminWrite(`/admin/api/enquiries/${id}`, 'PATCH', { estimated_fee: bad })).status, 400, bad);
+  r = await adminWrite(`/admin/api/enquiries/${id}`, 'PATCH', { estimated_fee: '' });
+  assert.equal(r.data.enquiry.estimated_fee, null);
+  await adminWrite(`/admin/api/enquiries/${id}`, 'PATCH', { estimated_fee: 40000 });
+});
+await check('CSV includes source and fee; follow-up "within 7 days" filter works', async () => {
+  const soon = new Date(Date.now() + 3 * 86400000).toISOString().slice(0, 10);
+  await adminWrite(`/admin/api/enquiries/${id}`, 'PATCH', { next_follow_up: soon, status: 'Contacted' });
+  const csv = await (await fetch(`${ADMIN}/admin/api/export.csv?view=all&q=${RUN}`)).text();
+  assert.ok(csv.includes('Estimated fee (£)') && csv.includes('Source') && csv.includes('UTM campaign'));
+  assert.ok(csv.includes('40000'));
+  const within7 = await (await fetch(`${ADMIN}/admin/api/export.csv?view=active&followup=7&q=${RUN}`)).text();
+  assert.ok(within7.includes(`Northwind Analytics ${RUN}`), 'due in 3 days appears under 7-day filter');
+  const dueNow = await (await fetch(`${ADMIN}/admin/api/export.csv?view=active&followup=1&q=${RUN}`)).text();
+  assert.ok(!dueNow.includes(`Northwind Analytics ${RUN}`), 'not yet due today');
+});
+await check('Analytics endpoint answers safely when not connected', async () => {
+  const r = await adminGet('/admin/api/analytics?days=30');
+  assert.equal(r.status, 200);
+  assert.equal(r.data.series.length, 30);
+  assert.equal(typeof r.data.configured, 'boolean');
+  const refresh = await adminWrite('/admin/api/analytics/refresh', 'POST', {}, {});
+  assert.equal(refresh.status, 403, 'refresh requires the dashboard header');
+  assert.equal((await adminGet('/admin/overview')).status, 200);
+  assert.equal((await adminGet('/admin/website')).status, 200);
 });
 await check('Unknown routes return 404', async () => {
   assert.equal((await adminGet('/admin/api/nothing')).status, 404);

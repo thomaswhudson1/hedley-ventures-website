@@ -4,6 +4,10 @@ import { authenticate } from './auth.js';
 import { sendNotification, retryPendingNotifications } from './email.js';
 import { SERVICES, RAISE_AMOUNTS, RAISE_TIMINGS, TRACTION, STATUSES, ACTIVE_STATUSES, CLOSED_STATUSES, PRIORITIES, LIMITS } from './options.js';
 import { cleanText, isIsoDate, json, londonToday, nowIso } from './util.js';
+import { CHANNELS } from './source.js';
+import { analyticsReport, syncAnalytics } from './analytics.js';
+
+const MAX_FEE = 100000000;   // £100m sanity limit for the estimated fee
 
 const SECURITY_HEADERS = {
   'Content-Security-Policy': "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
@@ -25,7 +29,8 @@ function withSecurity(response) {
 }
 
 const LIST_SQL = `SELECT e.id, e.ref, e.received_at, e.name, e.email, e.company, e.service, e.raise_amount, e.raise_timing, e.traction, e.message,
-         a.status, a.priority, a.notes, a.last_contacted, a.next_follow_up, a.archived_at, a.updated_at,
+         e.source_channel, e.referrer_host, e.landing_page, e.utm_source, e.utm_medium, e.utm_campaign,
+         a.status, a.priority, a.notes, a.last_contacted, a.next_follow_up, a.archived_at, a.updated_at, a.estimated_fee,
          n.status AS notification_status, n.attempts AS notification_attempts, n.last_error AS notification_error, n.sent_at AS notification_sent_at
   FROM enquiries e JOIN enquiry_admin a ON a.enquiry_id = e.id LEFT JOIN notifications n ON n.enquiry_id = e.id`;
 
@@ -55,6 +60,12 @@ function validateUpdate(body) {
       if (v === '' || isIsoDate(v)) { sets.push(field); values.push(v || null); } else errors[field] = 'Invalid date.';
     }
   }
+  if ('estimated_fee' in body) {
+    const raw = body.estimated_fee == null ? '' : String(body.estimated_fee).replace(/[£,\s]/g, '');
+    if (raw === '') { sets.push('estimated_fee'); values.push(null); }
+    else if (/^\d{1,9}$/.test(raw) && Number(raw) <= MAX_FEE) { sets.push('estimated_fee'); values.push(Number(raw)); }
+    else errors.estimated_fee = 'Enter the fee in whole pounds, e.g. 75000.';
+  }
   if ('archived' in body) {
     if (typeof body.archived !== 'boolean') errors.archived = 'Invalid value.';
     else { sets.push('archived_at'); values.push(body.archived ? nowIso() : null); }
@@ -66,7 +77,10 @@ const CSV_COLUMNS = [
   ['Reference', 'ref'], ['Date received (UTC)', 'received_at'], ['Company', 'company'], ['Contact name', 'name'], ['Email', 'email'],
   ['Services required', 'service'], ['Fundraising amount', 'raise_amount'], ['Fundraising timing', 'raise_timing'], ['Monthly revenue run-rate', 'traction'],
   ['Additional information', 'message'], ['Status', 'status'], ['Priority', 'priority'], ['Last contacted', 'last_contacted'],
-  ['Next follow-up', 'next_follow_up'], ['Internal notes', 'notes'], ['Archived', 'archived_at'], ['Email notification', 'notification_status']
+  ['Next follow-up', 'next_follow_up'], ['Estimated fee (£)', 'estimated_fee'], ['Internal notes', 'notes'],
+  ['Source', 'source_channel'], ['Referring site', 'referrer_host'], ['First page visited', 'landing_page'],
+  ['UTM source', 'utm_source'], ['UTM medium', 'utm_medium'], ['UTM campaign', 'utm_campaign'],
+  ['Archived', 'archived_at'], ['Email notification', 'notification_status']
 ];
 
 function csvCell(value) {
@@ -87,7 +101,14 @@ export function filterRows(rows, params, today = londonToday()) {
     const v = params.get(key);
     if (v) out = out.filter((r) => r[field] === v);
   }
-  if (params.get('followup') === '1') out = out.filter((r) => r.next_follow_up && r.next_follow_up <= today && !r.archived_at && !CLOSED_STATUSES.includes(r.status));
+  const source = params.get('source');
+  if (source) out = out.filter((r) => (r.source_channel || 'Not recorded') === source);
+  // followup=1: due today or overdue; followup=7: due today, overdue or within the next 7 days
+  const followup = params.get('followup');
+  if (followup === '1' || followup === '7') {
+    const limit = followup === '7' ? new Date(Date.parse(today + 'T12:00:00Z') + 7 * 86400000).toISOString().slice(0, 10) : today;
+    out = out.filter((r) => r.next_follow_up && r.next_follow_up <= limit && !r.archived_at && !CLOSED_STATUSES.includes(r.status));
+  }
   if (q) out = out.filter((r) => `${r.company} ${r.name}`.toLowerCase().includes(q));
   return out;
 }
@@ -115,11 +136,20 @@ async function handleApi(request, env, url, user) {
   if (path === '/session' && method === 'GET') {
     return json({
       email: user.email, dev: user.dev, logoutUrl: '/cdn-cgi/access/logout', today: londonToday(),
-      options: { services: SERVICES, raiseAmounts: RAISE_AMOUNTS, raiseTimings: RAISE_TIMINGS, traction: TRACTION, statuses: STATUSES, activeStatuses: ACTIVE_STATUSES, closedStatuses: CLOSED_STATUSES, priorities: PRIORITIES }
+      options: { services: SERVICES, raiseAmounts: RAISE_AMOUNTS, raiseTimings: RAISE_TIMINGS, traction: TRACTION, statuses: STATUSES, activeStatuses: ACTIVE_STATUSES, closedStatuses: CLOSED_STATUSES, priorities: PRIORITIES, channels: [...CHANNELS, 'Not recorded'] }
     });
   }
 
   if (path === '/enquiries' && method === 'GET') return json({ today: londonToday(), enquiries: await listEnquiries(env) });
+
+  if (path === '/analytics' && method === 'GET') {
+    const days = [7, 30, 90].includes(Number(url.searchParams.get('days'))) ? Number(url.searchParams.get('days')) : 30;
+    return json(await analyticsReport(env, days));
+  }
+  if (path === '/analytics/refresh' && method === 'POST') {
+    if (!isSameOriginWrite(request, url)) return json({ error: 'Request blocked.' }, 403);
+    return json({ outcome: await syncAnalytics(env, { force: true }) });
+  }
 
   if (path === '/export.csv' && method === 'GET') {
     const rows = filterRows(await listEnquiries(env), url.searchParams);
@@ -168,10 +198,10 @@ export default {
     }
 
     try {
-      if (url.pathname === '/' || url.pathname === '/admin' || url.pathname === '/admin/') return withSecurity(Response.redirect(`${url.origin}/admin/enquiries`, 302));
+      if (url.pathname === '/' || url.pathname === '/admin' || url.pathname === '/admin/') return withSecurity(Response.redirect(`${url.origin}/admin/overview`, 302));
       if (url.pathname.startsWith('/admin/api/')) return withSecurity(await handleApi(request, env, url, user));
       if (request.method !== 'GET') return withSecurity(json({ error: 'Method not allowed.' }, 405));
-      if (/^\/admin\/enquiries(\/[0-9a-f-]{36})?\/?$/i.test(url.pathname)) return withSecurity(await env.ASSETS.fetch(new Request(`${url.origin}/index.html`)));
+      if (/^\/admin\/(overview|website|enquiries(\/[0-9a-f-]{36})?)\/?$/i.test(url.pathname)) return withSecurity(await env.ASSETS.fetch(new Request(`${url.origin}/index.html`)));
       if (url.pathname.startsWith('/admin/assets/')) {
         const asset = await env.ASSETS.fetch(new Request(`${url.origin}${url.pathname.replace(/^\/admin/, '')}`));
         return withSecurity(asset);
@@ -188,6 +218,7 @@ export default {
       await retryPendingNotifications(env);
       const cutoff = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString();
       await env.DB.prepare('DELETE FROM submission_attempts WHERE created_at < ?1').bind(cutoff).run();
+      await syncAnalytics(env);   // refreshes website figures at most once an hour
     })());
   }
 };
