@@ -155,8 +155,7 @@ window.HEDLEY_TRANSACTIONS = [
     amount: '£3m',
     currency: 'GBP',
     counterparties: [
-      { name: 'Symvan', logo: { src: '/assets/proof/symvan.svg', width: 374, height: 58, displayHeight: 25 } },
-      { name: 'Artorius', logo: { src: '/assets/proof/artorius.png', width: 339, height: 66, displayHeight: 18 } }
+      { name: 'Artorius', logo: { src: '/assets/proof/artorius.png', width: 339, height: 66, displayHeight: 23 } }
     ],
     counterpartyLabel: null,
     year: null,
