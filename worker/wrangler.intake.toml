@@ -1,0 +1,25 @@
+# Public enquiry intake (receives Contact page submissions). No admin access, no way to read enquiries.
+name = "hedley-enquiry-intake"
+main = "src/intake.js"
+compatibility_date = "2026-09-15"
+workers_dev = true
+preview_urls = false
+
+[observability]
+enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hedley-enquiries"
+database_id = "95fb95c6-146e-442f-a738-a15c355df5ed"
+migrations_dir = "migrations"
+
+[vars]
+ALLOWED_ORIGINS = "https://hedleyventures.com,https://www.hedleyventures.com"
+EMAIL_FROM = "Hedley Ventures Website <enquiries@notify.hedleyventures.com>"
+ADMIN_BASE_URL = "https://hedley-enquiries-admin.hedley-enquiries.workers.dev"
+
+# Secrets (set with `wrangler secret put NAME -c wrangler.intake.toml`, never stored in this file):
+#   TURNSTILE_SECRET   Cloudflare Turnstile secret key
+#   RESEND_API_KEY     Resend API key (sending access only)
+#   NOTIFY_TO          Address that receives new-enquiry notifications

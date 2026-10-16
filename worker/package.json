@@ -1,0 +1,17 @@
+{
+  "name": "hedley-enquiries",
+  "private": true,
+  "description": "Hedley Ventures enquiry form backend and private admin dashboard (Cloudflare Workers + D1).",
+  "type": "module",
+  "scripts": {
+    "dev:intake": "wrangler dev -c wrangler.intake.toml --port 8787",
+    "dev:admin": "wrangler dev -c wrangler.admin.toml --port 8788",
+    "db:migrate:local": "wrangler d1 migrations apply hedley-enquiries --local -c wrangler.admin.toml",
+    "db:migrate:remote": "wrangler d1 migrations apply hedley-enquiries --remote -c wrangler.admin.toml",
+    "deploy": "wrangler d1 migrations apply hedley-enquiries --remote -c wrangler.admin.toml && wrangler deploy -c wrangler.intake.toml && wrangler deploy -c wrangler.admin.toml",
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "devDependencies": {
+    "wrangler": "4.145.0"
+  }
+}

@@ -1,0 +1,37 @@
+# Private enquiries dashboard. The whole workers.dev hostname is protected by Cloudflare Access,
+# and the Worker verifies the Access token itself on every request.
+name = "hedley-enquiries-admin"
+main = "src/admin.js"
+compatibility_date = "2026-09-15"
+workers_dev = true
+preview_urls = false
+
+[observability]
+enabled = true
+
+[assets]
+directory = "./admin-ui"
+binding = "ASSETS"
+run_worker_first = true
+html_handling = "none"
+not_found_handling = "none"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hedley-enquiries"
+database_id = "95fb95c6-146e-442f-a738-a15c355df5ed"
+migrations_dir = "migrations"
+
+[triggers]
+crons = ["*/15 * * * *"]   # retry failed email notifications; tidy rate-limit records
+
+[vars]
+ACCESS_TEAM_DOMAIN = "cold-wave-71f8.cloudflareaccess.com"
+ACCESS_AUD = "cb127a3f079e0c72f5a7ba0f4005e9d70097b0e26d034bfed512e00349d0fadd"
+EMAIL_FROM = "Hedley Ventures Website <enquiries@notify.hedleyventures.com>"
+ADMIN_BASE_URL = "https://hedley-enquiries-admin.hedley-enquiries.workers.dev"
+
+# Secrets (set with `wrangler secret put NAME -c wrangler.admin.toml`, never stored in this file):
+#   ADMIN_EMAIL        Email address allowed into the dashboard
+#   RESEND_API_KEY     Resend API key (for notification retries)
+#   NOTIFY_TO          Address that receives new-enquiry notifications

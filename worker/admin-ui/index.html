@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Enquiries | Hedley Ventures</title>
+<link rel="stylesheet" href="/admin/assets/admin.css?v=2">
+<script defer src="/admin/assets/admin.js?v=2"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="/admin/enquiries"><span class="brand__name">Hedley Ventures</span><span class="brand__section">Enquiries</span></a>
+    <div class="topbar__actions">
+      <span class="topbar__user" id="user-email"></span>
+      <a class="btn btn--ghost" id="export-link" href="/admin/api/export.csv">Export CSV</a>
+      <a class="btn btn--ghost" id="logout-link" href="/cdn-cgi/access/logout">Log out</a>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="banner" id="banner" role="alert" hidden></div>
+
+  <section class="stats" aria-label="Overview">
+    <button class="stat" type="button" data-stat="total"><span class="stat__label">Total enquiries</span><span class="stat__value" id="stat-total">–</span></button>
+    <button class="stat" type="button" data-stat="new"><span class="stat__label">New enquiries</span><span class="stat__value" id="stat-new">–</span></button>
+    <button class="stat" type="button" data-stat="active"><span class="stat__label">Active opportunities</span><span class="stat__value" id="stat-active">–</span></button>
+    <button class="stat stat--alert" type="button" data-stat="followup"><span class="stat__label">Follow-ups due</span><span class="stat__value" id="stat-followup">–</span></button>
+  </section>
+
+  <section class="toolbar" aria-label="Search and filters">
+    <label class="field field--search"><span>Search</span><input id="f-q" type="search" placeholder="Company or contact name" autocomplete="off"></label>
+    <label class="field"><span>Status</span><select id="f-status"><option value="">All statuses</option></select></label>
+    <label class="field"><span>Service</span><select id="f-service"><option value="">All services</option></select></label>
+    <label class="field"><span>Fundraising amount</span><select id="f-amount"><option value="">Any amount</option></select></label>
+    <label class="field"><span>Fundraising timing</span><select id="f-timing"><option value="">Any timing</option></select></label>
+    <label class="field"><span>Show</span><select id="f-view"><option value="active">Current enquiries</option><option value="archived">Archived</option><option value="all">All</option></select></label>
+    <label class="check"><input id="f-followup" type="checkbox"> Follow-ups due only</label>
+    <button class="btn btn--link" id="clear-filters" type="button">Clear filters</button>
+  </section>
+
+  <p class="result-count" id="result-count" aria-live="polite"></p>
+
+  <div class="table-wrap">
+    <table class="table" id="table">
+      <thead>
+        <tr>
+          <th scope="col"><button type="button" data-sort="received_at">Date received</button></th>
+          <th scope="col"><button type="button" data-sort="company">Company</button></th>
+          <th scope="col"><button type="button" data-sort="name">Contact name</button></th>
+          <th scope="col"><button type="button" data-sort="service">Service required</button></th>
+          <th scope="col"><button type="button" data-sort="raise_amount">Fundraising amount</button></th>
+          <th scope="col"><button type="button" data-sort="traction">Monthly revenue run-rate</button></th>
+          <th scope="col"><button type="button" data-sort="raise_timing">Fundraising timing</button></th>
+          <th scope="col"><button type="button" data-sort="status">Status</button></th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No enquiries match these filters.</p>
+    <p class="empty" id="loading">Loading enquiries…</p>
+  </div>
+</main>
+
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__backdrop" data-close></div>
+  <section class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="d-company" tabindex="-1">
+    <header class="drawer__head">
+      <div>
+        <p class="drawer__ref" id="d-ref"></p>
+        <h1 id="d-company"></h1>
+        <p class="drawer__received" id="d-received"></p>
+      </div>
+      <button class="btn btn--ghost drawer__close" type="button" data-close aria-label="Close enquiry">Close</button>
+    </header>
+
+    <div class="drawer__body">
+      <div class="badges" id="d-badges"></div>
+
+      <h2 class="section-title">Submitted information</h2>
+      <dl class="details" id="d-details"></dl>
+
+      <div class="notify" id="d-notify"></div>
+
+      <h2 class="section-title">Your notes and follow-up</h2>
+      <form class="edit" id="d-form">
+        <div class="edit__grid">
+          <label class="field"><span>Status</span><select name="status" id="d-status"></select></label>
+          <label class="field"><span>Priority</span><select name="priority" id="d-priority"></select></label>
+          <label class="field"><span>Last contacted</span><input type="date" name="last_contacted" id="d-last"></label>
+          <label class="field"><span>Next follow-up</span><input type="date" name="next_follow_up" id="d-next"></label>
+        </div>
+        <label class="field"><span>Internal notes</span><textarea name="notes" id="d-notes" rows="7" maxlength="10000"></textarea></label>
+        <div class="edit__actions">
+          <button class="btn btn--primary" type="submit" id="d-save">Save changes</button>
+          <span class="save-status" id="d-save-status" role="status"></span>
+          <button class="btn btn--ghost edit__archive" type="button" id="d-archive">Archive</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+</body>
+</html>
