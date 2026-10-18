@@ -8,3 +8,5 @@ worker/.dev.vars
 
 worker/test/outbox/
 
+linkedin-branding/src/_html/
+
